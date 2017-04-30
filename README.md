@@ -10,5 +10,9 @@ TODO just run setup script
     * `create database photo with owner photo;`
 * Store password in POSTGRES_PHOTO_PASSWORD environmental variable
     * bash$ `export POSTGRES_PHOTO_PASSWORD='xxxx'`
+* `python manage.py migrate`
+* `python manage.py createsuperuser`
+* `python manage.py runserver
+`
 
     
