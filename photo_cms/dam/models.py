@@ -5,6 +5,7 @@ from django.core.files.base import ContentFile
 from django.contrib.postgres.fields import HStoreField
 from PIL import Image
 from io import BytesIO
+import exifread
 
 # TODO import this from app settings
 THUMBNAIL_SIZE = (200, 200)
@@ -27,13 +28,15 @@ class Photo(models.Model):
     proxy_data = models.ImageField(  # "thumbnail"
         upload_to='thumbs', max_length=36, editable=False
     )
-    original_filename = models.TextField
+    original_filename = models.TextField()
     created_datetime = models.DateTimeField(default=timezone.now)
     modified_datetime = models.DateTimeField(default=timezone.now)
     # Should be auto-populated by ImageField
-    height = models.IntegerField
-    width = models.IntegerField
-    # TODO Exif data - probably JSONField or HStoreField
+    height = models.IntegerField()
+    width = models.IntegerField()
+    # HStoreField is Postgres-specific, stores a dict
+    # https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#hstorefield
+    exif_tags = HStoreField()
     # TODO GPS data
     # TODO XMP data
     # TODO IPTC-IIM data
@@ -54,6 +57,10 @@ class Photo(models.Model):
         if self.format != self.get_format():
             self.format = self.get_format()
 
+        # Read Exif tags from JPEG
+        if self.exif_tags is None:
+            self.exif_tags = self.get_exif()
+
         # Generate a thumbnail
         # http://stackoverflow.com/a/43011898/7087237
         if not self.make_thumbnail():
@@ -68,6 +75,15 @@ class Photo(models.Model):
         """
         image = Image.open(self.image_data)
         return image.format
+
+    def get_exif(self):
+        """
+        
+        :return: 
+        """
+        image = Image.open(self.image_data)
+        _exif_tags = exifread.process_file(image)
+        return _exif_tags
 
     def make_thumbnail(self):
         """
