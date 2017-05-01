@@ -1,4 +1,4 @@
-Python 3.4, PostgreSQL
+Python 3.4, PostgreSQL 9.4+
 
 Designed for hosting in AWS Elastic Beanstalk
 

@@ -1,9 +1,13 @@
 import uuid
 from django.db import models
 from django.utils import timezone
+from django.core.files.base import ContentFile
+from django.contrib.postgres.fields import HStoreField
+from PIL import Image
+from io import BytesIO
 
-# TODO make this user configurable
-THUMBNAIL_SIZE = [200, 200]
+# TODO import this from app settings
+THUMBNAIL_SIZE = (200, 200)
 
 
 class Photo(models.Model):
@@ -19,7 +23,8 @@ class Photo(models.Model):
         upload_to='images', max_length=36,
         width_field='width', height_field='height'
     )
-    proxy_data = models.ImageField(
+    format = models.CharField(max_length=8)
+    proxy_data = models.ImageField(  # "thumbnail"
         upload_to='thumbs', max_length=36, editable=False
     )
     original_filename = models.TextField
@@ -28,29 +33,70 @@ class Photo(models.Model):
     # Should be auto-populated by ImageField
     height = models.IntegerField
     width = models.IntegerField
-    # TODO Exif data
+    # TODO Exif data - probably JSONField or HStoreField
     # TODO GPS data
     # TODO XMP data
     # TODO IPTC-IIM data
 
     # TODO generate thumbnail -> proxy_data function
 
+    def __str__(self):
+        return '{}.{}'.format(self.original_filename, self.format.lower())
+
     def save(self, *args, **kwargs):
+        """
+        
+        :param args: 
+        :param kwargs: 
+        :return: 
+        """
+        # Determine image format if not already set
+        if self.format != self.get_format():
+            self.format = self.get_format()
+
+        # Generate a thumbnail
         # http://stackoverflow.com/a/43011898/7087237
         if not self.make_thumbnail():
             raise Exception('Could not create thumbnail')
+
         super(Photo, self).save(*args, **kwargs)
 
-    def make_thumbnail(self):
-        from PIL import Image
-
-        image = Image.open(self.image_data)
+    def get_format(self):
+        """
         
+        :return: 
+        """
+        image = Image.open(self.image_data)
+        return image.format
+
+    def make_thumbnail(self):
+        """
+        
+        :return: 
+        """
+        # make sure image data is set
+        if not self.image_data:
+            return False
+
+        # Create a resized version of the image
+        image = Image.open(self.image_data)
+        image.thumbnail(THUMBNAIL_SIZE, Image.BICUBIC)
+
+        # Save the thumbnail to in-memory 'file'
+        temp_thumb = BytesIO()
+        image.save(temp_thumb, 'JPEG')
+        temp_thumb.seek(0)
+
+        # set save=False, or else it will infinite loop
+        thumb_filename = '{}.{}'.format(id, '.jpg')
+        self.proxy_data.save(thumb_filename,
+                             ContentFile(temp_thumb.read()),
+                             save=False)
+        temp_thumb.close()
+
+        return True
 
 
-class ExifTag(models.Model):
-    """
-    This represents the set of Exif data for an image.
-    One-to-one mapping, but not all Photos have ExifTags
-    """
+
+
 
