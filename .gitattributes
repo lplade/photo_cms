@@ -1,0 +1,6 @@
+# This keeps GitHub from giving us credit for 3rd-party code libraries
+photo_cms/dam/static/css/bootstrap* linguist-vendored
+photo_cms/dam/static/js/bootstrap* linguist-vendored
+photo_cms/dam/static/js/npm.js linguist-vendored
+photo_cms/dam/static/fonts/glyphicons* linguist-vendored
+photo_cms/dam/static/locales/bootstrap* linguist-vendored

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dam',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -105,16 +106,20 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.NumericPasswordValidator',
     },
 ]
 
@@ -136,4 +141,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# TODO set up AWS S3
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'www', 'static')
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'www', 'media')
+MEDIA_URL = '/media/'
+
+STATICFILES_LOCATION = 'static'
+MEDIAFILES_LOCATON = 'media'
+
