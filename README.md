@@ -1,6 +1,8 @@
 ## Requirements ##
 * [Python 3.4](https://www.python.org/downloads/release/python-346/)
-* [PostgreSQL 9.4+](https://www.postgresql.org/download/)
+* [PostgreSQL 9.4+](https://www.postgresql.org/download/) In Debian and 
+derivatives, make sure postgresql-contrib is installed, it contains hstore
+support
 * Pillow dependencies:
     * [libjpeg-dev](http://libjpeg.sourceforge.net/)
     * [libtiff-dev](http://www.libtiff.org/)
@@ -16,9 +18,12 @@ TODO just run setup script
 * Install PostgreSQL, run `psql`:
     * `create user photo with password 'xxxx';`
     * `create database photo with owner photo;`
+    * `\c photo`
+    * `create extension if not exists hstore;`
 * Store password in POSTGRES_PHOTO_PASSWORD environmental variable
     * bash$ `export POSTGRES_PHOTO_PASSWORD='xxxx'`
 * `python manage.py migrate`
+* `python manage.py collectstatic`
 * `python manage.py createsuperuser`
 * `python manage.py runserver
 `
