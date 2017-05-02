@@ -30,7 +30,7 @@ def _gen_image_filename(instance, filename):
 def _unique_path(user_id, filename, category='images'):
     """
     Generates a unique filename for storage
-    :param category: 'images'
+    :param category: 'images', could use for something else
     :param user_id: instance.user.user.id
     :param filename: original filename
     :return: Something like 'images/23/a5497075-c81d-499c-9aeb-326c4047dfe3.jpg'
@@ -59,7 +59,8 @@ class Photo(models.Model):
     owner = models.ForeignKey('auth.User', blank=False)
     # We will use UUID as filename (36 chars)
     image_data = models.ImageField(
-        upload_to=_gen_image_filename, max_length=36,
+        upload_to=_gen_image_filename,
+        max_length=36,
         width_field='width', height_field='height'
     )
     format = models.CharField(max_length=8)
