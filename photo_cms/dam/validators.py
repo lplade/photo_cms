@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 
+# TODO pull from common settings file
 MAX_FILE_SIZE = 50 * 1024 * 1024
 
 

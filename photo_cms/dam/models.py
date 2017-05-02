@@ -61,14 +61,14 @@ class Photo(models.Model):
     # We will use UUID as filename (36 chars)
     image_data = models.ImageField(
         upload_to=_gen_image_filename,
-        max_length=36,
+        max_length=64,
         width_field='width', height_field='height',
         validators=[file_size]
     )
     format = models.CharField(max_length=8)
     proxy_data = models.ImageField(  # "thumbnail"
         upload_to=_gen_thumbs_filename,
-        max_length=36,
+        max_length=64,
         null=True,
         blank=True
     )
@@ -81,6 +81,7 @@ class Photo(models.Model):
     width = models.IntegerField()
 
     # HStoreField is Postgres-specific, stores a dict
+    # Needs to be enabled on Postgres side too
     # https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#hstorefield
     exif_tags = HStoreField()
 
