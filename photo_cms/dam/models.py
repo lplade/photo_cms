@@ -1,3 +1,4 @@
+import os
 import uuid
 from django.db import models
 from django.utils import timezone
@@ -21,30 +22,36 @@ class Photo(models.Model):
     owner = models.ForeignKey('auth.User', blank=False)
     # We will use UUID as filename (36 chars)
     image_data = models.ImageField(
-        upload_to='images', max_length=36,
+        upload_to='images/', max_length=36,
         width_field='width', height_field='height'
     )
     format = models.CharField(max_length=8)
     proxy_data = models.ImageField(  # "thumbnail"
-        upload_to='thumbs', max_length=36, editable=False
+        upload_to='thumbs/', max_length=36, editable=False
     )
     original_filename = models.TextField()
     created_datetime = models.DateTimeField(default=timezone.now)
     modified_datetime = models.DateTimeField(default=timezone.now)
+
     # Should be auto-populated by ImageField
     height = models.IntegerField()
     width = models.IntegerField()
+
     # HStoreField is Postgres-specific, stores a dict
     # https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#hstorefield
     exif_tags = HStoreField()
-    # TODO GPS data
-    # TODO XMP data
-    # TODO IPTC-IIM data
+
+    # TODO GPS data (should be in exifread dict)
+    # TODO XMP data?
+    # TODO IPTC-IIM data?
 
     # TODO generate thumbnail -> proxy_data function
 
     def __str__(self):
         return '{}.{}'.format(self.original_filename, self.format.lower())
+
+    def _gen_filename(self):
+
 
     def save(self, *args, **kwargs):
         """
@@ -81,6 +88,8 @@ class Photo(models.Model):
         
         :return: 
         """
+        # Note: exifread provides better READING of Exif, but can't write
+        # any changes.
         image = Image.open(self.image_data)
         _exif_tags = exifread.process_file(image)
         return _exif_tags
