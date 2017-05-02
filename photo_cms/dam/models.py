@@ -8,6 +8,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from PIL import Image
 from io import BytesIO
 import exifread
+from .validators import file_size
 
 # TODO import this from app settings
 THUMBNAIL_SIZE = (200, 200)
@@ -61,7 +62,8 @@ class Photo(models.Model):
     image_data = models.ImageField(
         upload_to=_gen_image_filename,
         max_length=36,
-        width_field='width', height_field='height'
+        width_field='width', height_field='height',
+        validators=[file_size]
     )
     format = models.CharField(max_length=8)
     proxy_data = models.ImageField(  # "thumbnail"
