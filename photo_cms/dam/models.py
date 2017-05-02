@@ -89,18 +89,14 @@ class Photo(models.Model):
     # TODO XMP data?
     # TODO IPTC-IIM data?
 
-    # TODO generate thumbnail -> proxy_data function
-
     def __str__(self):
         return '{}.{}'.format(self.original_filename, self.format.lower())
 
     def save(self, *args, **kwargs):
-        """
-        
-        :param args: 
-        :param kwargs: 
-        :return: 
-        """
+
+        # Update modified time
+        self.modified_datetime = timezone.now()
+
         # Determine image format if not already set
         if self.format != self.get_format():
             self.format = self.get_format()
@@ -118,27 +114,28 @@ class Photo(models.Model):
 
     def get_format(self):
         """
-        
-        :return: 
+        Uses Pillow to determine image format
+        :return: Pillow image format
         """
         image = Image.open(self.image_data)
         return image.format
 
     def get_exif(self):
         """
-        
-        :return: 
+        Uses exifread to get Exif tags
+        :return: dict of tags
         """
-        # Note: exifread provides better READING of Exif, but can't write
-        # any changes.
+        # Note: exifread provides better READING of Exif than Pillow,
+        # but can't write any changes.
         image = Image.open(self.image_data)
         _exif_tags = exifread.process_file(image)
         return _exif_tags
 
     def make_thumbnail(self):
         """
-        
-        :return: 
+        Generates a thumbnail image with Pillow, and saves it as a proxy
+        image in the model.
+        :return: True if successful, False if no original image
         """
         # https://gist.github.com/valberg/2429288
 
