@@ -84,6 +84,10 @@ class Photo(models.Model):
     # Needs to be enabled on Postgres side too
     # https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#hstorefield
     exif_tags = HStoreField()
+    # TODO store tags in own table for querying
+
+    # List of galleries this photo is in
+    galleries = models.ManyToManyField(Gallery, related_name='photos')
 
     # TODO GPS data (should be in exifread dict)
     # TODO XMP data?
@@ -165,6 +169,20 @@ class Photo(models.Model):
         temp_thumb.close()
 
         return True
+
+
+class Gallery(models):
+    """
+    This represents a collection of photos
+    """
+    owner = models.ForeignKey('auth.User', blank=False)
+    name = models.CharField(max_length=255, blank=False)
+    description = models.TextField
+    # ManyToManyField set in Photo
+
+    def __str__(self):
+        photo_count = len(self.photos)
+        return '{} ({} photos)'.format(self.name, photo_count)
 
 
 
