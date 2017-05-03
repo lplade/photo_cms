@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.core.files.base import ContentFile
 from django.contrib.postgres.fields import HStoreField
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import User
 from PIL import Image
 from io import BytesIO
 import exifread
@@ -13,6 +14,12 @@ from .validators import file_size
 # TODO import this from app settings
 THUMBNAIL_SIZE = (200, 200)
 
+# Override default User fields
+User._meta.get_field('email')._unique = True
+User._meta.get_field('email')._blank = False
+
+
+# Helper functions #
 
 def _gen_image_filename(instance, filename):
     """
@@ -51,6 +58,21 @@ def _gen_thumbs_filename(instance, filename):
     return os.path.join(
         'thumbs', instance.user.user.id, filename
     )
+
+
+# Models #
+
+class Profile(models.Model):
+    """
+    User profile
+    """
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE,
+                                related_name='profile')
+    about = models.TextField
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=128)
+    country = models.CharField(max_length=128)
 
 
 class Photo(models.Model):
