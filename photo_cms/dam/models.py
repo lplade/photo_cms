@@ -73,7 +73,7 @@ class Profile(models.Model):
     about = models.TextField(blank=True)
     city = models.CharField(max_length=255, blank=True)
     state = models.CharField(max_length=127, blank=True)
-    country = models.CharField(max_length=127)
+    country = models.CharField(max_length=127, blank=True)
 
     def save(self, *args, **kwargs):
         # If display_name is not set, use username
