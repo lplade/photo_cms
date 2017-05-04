@@ -1,0 +1,10 @@
+{% extends 'dam/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>User profile</h1>
+        </div>
+        <!-- TODO details of user account -->
+        <!-- TODO list of galleries -->
+    </div>
+{% endblock %}

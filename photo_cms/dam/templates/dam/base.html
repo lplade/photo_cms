@@ -23,6 +23,9 @@
   </head>
   <body>
     {% include 'dam/includes/navbar.html' %}
+    {% block precontainer %}
+        {# Stuff that appears before main container (jumbotron) #}
+    {% endblock %}
     {% block content %}
         {# Page content goes here #}
     {% endblock %}

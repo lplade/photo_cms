@@ -201,12 +201,16 @@ class Gallery(models):
     name = models.CharField(max_length=255, blank=False)
     description = models.TextField
     # ManyToManyField set in Photo
+    created_datetime = models.DateTimeField(default=timezone.now)
+    modified_datetime = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         photo_count = len(self.photos)
         return '{} ({} photos)'.format(self.name, photo_count)
 
-
-
+    def save(self, *args, **kwargs):
+        # Update modified time
+        self.modified_datetime = timezone.now()
+        super(Gallery, self).save(*args, **kwargs)
 
 

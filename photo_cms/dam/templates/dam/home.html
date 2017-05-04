@@ -1,6 +1,6 @@
 {% extends 'dam/base.html' %}
 
-{% block content %}
+{% block precontainer %}
     <!-- Full width jumbotron splash -->
     <div class="jumbotron"> <!--TODO style this: big photo -->
         <div class="container">
@@ -8,11 +8,11 @@
             <p class="small">Maybe some other words</p>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                Explanatory text here
-            </div>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            Explanatory text here
         </div>
     </div>
 {% endblock %}
