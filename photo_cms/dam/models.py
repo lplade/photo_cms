@@ -69,10 +69,17 @@ class Profile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE,
                                 related_name='profile')
-    about = models.TextField
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=128)
-    country = models.CharField(max_length=128)
+    display_name = models.CharField(max_length=64)
+    about = models.TextField(blank=True)
+    city = models.CharField(max_length=255, blank=True)
+    state = models.CharField(max_length=127, blank=True)
+    country = models.CharField(max_length=127)
+
+    def save(self, *args, **kwargs):
+        # If display_name is not set, use username
+        if self.display_name is None or self.display_name == '':
+            self.display_name = self.user.username
+        super(Profile, self).save(*args, **kwargs)
 
 
 class Gallery(models.Model):
