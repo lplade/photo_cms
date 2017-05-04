@@ -75,6 +75,27 @@ class Profile(models.Model):
     country = models.CharField(max_length=128)
 
 
+class Gallery(models.Model):
+    """
+    This represents a collection of photos
+    """
+    owner = models.ForeignKey('auth.User', blank=False)
+    name = models.CharField(max_length=255, blank=False)
+    description = models.TextField
+    # ManyToManyField set in Photo
+    created_datetime = models.DateTimeField(default=timezone.now)
+    modified_datetime = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        photo_count = len(self.photos)
+        return '{} ({} photos)'.format(self.name, photo_count)
+
+    def save(self, *args, **kwargs):
+        # Update modified time
+        self.modified_datetime = timezone.now()
+        super(Gallery, self).save(*args, **kwargs)
+
+
 class Photo(models.Model):
     """
     Represents a single image including metadata
@@ -191,26 +212,4 @@ class Photo(models.Model):
         temp_thumb.close()
 
         return True
-
-
-class Gallery(models):
-    """
-    This represents a collection of photos
-    """
-    owner = models.ForeignKey('auth.User', blank=False)
-    name = models.CharField(max_length=255, blank=False)
-    description = models.TextField
-    # ManyToManyField set in Photo
-    created_datetime = models.DateTimeField(default=timezone.now)
-    modified_datetime = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        photo_count = len(self.photos)
-        return '{} ({} photos)'.format(self.name, photo_count)
-
-    def save(self, *args, **kwargs):
-        # Update modified time
-        self.modified_datetime = timezone.now()
-        super(Gallery, self).save(*args, **kwargs)
-
 
