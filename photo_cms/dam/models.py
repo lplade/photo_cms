@@ -81,6 +81,9 @@ class Profile(models.Model):
             self.display_name = self.user.username
         super(Profile, self).save(*args, **kwargs)
 
+    def get_username(self):
+        return self.user.username
+
 
 class Gallery(models.Model):
     """

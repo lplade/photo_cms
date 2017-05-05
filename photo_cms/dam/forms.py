@@ -97,3 +97,4 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('display_name', 'about', 'city', 'state', 'country')
+        # TODO validate display_name to not blank

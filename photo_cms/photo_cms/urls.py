@@ -21,7 +21,11 @@ from django.conf.urls.static import static
 from dam import views, views_users
 
 urlpatterns = [
+    # Built-in Django admin interface
     url(r'^admin/', admin.site.urls),
+
+    # Login and logout are baked into auth.views
+    # We can override where their templates go
     url(r'^accounts/login/$',
         auth_views.login,
         {'template_name': 'dam/auth_login.html'},
@@ -30,7 +34,12 @@ urlpatterns = [
         auth_views.logout,
         {'template_name': 'dam/auth_logout.html'},
         name='logout'),
-    url(r'^register/$', views_users.register, name='register'),
+
+    url(r'^register/$',
+        views_users.register,
+        name='register'),
+
+    # check app-specific URLs for everything else
     url(r'^', include('dam.urls')),
 ]
 

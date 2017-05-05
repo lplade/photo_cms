@@ -54,7 +54,12 @@ def my_user_profile(request):
                        'profile': profile,
                        'title': SITE_TITLE, })
     else:
-        form = UserProfileForm()
+        # If display_name is blank, pre-populate with username
+        if profile.display_name is None or profile.display_name == '':
+            form = UserProfileForm(
+                initial={'display_name': profile.user.username})
+        else:
+            form = UserProfileForm()
 
     return render(request, 'dam/user_modify.html',
                   {'form': form,
@@ -90,7 +95,20 @@ def modify_user(request):
 
 
 @login_required
-def photoroll(request, user_pk):
+def my_photoroll(request):
+    user = request.user
+    profile = request.user.profile
+    photos = Photo.objects.filter(owner=request.user)\
+        .order_by('created_datetime')  # TODO order by Exif created tag
+    return render(request, 'dam/user_photoroll.html', {
+        'title': SITE_TITLE,
+        'user': user,
+        'profile': profile,
+        'photos': photos
+    })
+
+@login_required
+def my_galleries(request):
     pass
 
 

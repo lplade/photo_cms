@@ -7,6 +7,6 @@ from django.http import HttpResponse
 SITE_TITLE = 'Photos'
 
 
-def index(request):
+def home(request):
     return render(request, 'dam/home.html',
                   {'title': SITE_TITLE, })

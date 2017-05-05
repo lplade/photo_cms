@@ -139,7 +139,7 @@ USE_TZ = True
 
 
 # Where user gets sent after successful login
-LOGIN_REDIRECT_URL = 'dam:my_user_profile'
+LOGIN_REDIRECT_URL = 'dam:my_photoroll'
 LOGOUT_REDIRECT_URL = 'dam:homepage'
 
 # Static files (CSS, JavaScript, Images)
