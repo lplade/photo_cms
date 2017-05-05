@@ -53,6 +53,13 @@ def my_user_profile(request):
                       {'form': form,
                        'profile': profile,
                        'title': SITE_TITLE, })
+    else:
+        form = UserProfileForm()
+
+    return render(request, 'dam/user_modify.html',
+                  {'form': form,
+                   'profile': profile,
+                   'title': SITE_TITLE})
 
 
 @login_required
@@ -96,7 +103,7 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            form.save()
             user = authenticate(
                 username=request.POST['username'],
                 password=request.POST['password1']
@@ -106,12 +113,12 @@ def register(request):
         else:
             message = 'Please check the data you entered'
             return render(request,
-                          'dam/user_register.html',
+                          'dam/auth_register.html',
                           {'form': form, 'message': message,
                            'title': SITE_TITLE, })
     else:
         form = UserRegistrationForm()
-        return render(request, 'dam/user_register.html',
+        return render(request, 'dam/auth_register.html',
                       {'form': form, 'title': SITE_TITLE, })
 
 
