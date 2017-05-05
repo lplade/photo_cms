@@ -99,7 +99,8 @@ def my_photoroll(request):
     user = request.user
     profile = request.user.profile
     photos = Photo.objects.filter(owner=request.user)\
-        .order_by('created_datetime')  # TODO order by Exif created tag
+        .order_by('created_datetime')[:100]  # TODO order by Exif created tag
+    # TODO get the full list and use JS to limit # displayed
     return render(request, 'dam/user_photoroll.html', {
         'title': SITE_TITLE,
         'user': user,
@@ -107,9 +108,19 @@ def my_photoroll(request):
         'photos': photos
     })
 
+
 @login_required
 def my_galleries(request):
-    pass
+    user = request.user
+    profile = request.user.profile
+    galleries = Gallery.objects.filter(owner=request.user)\
+        .order_by('created_datetime')
+    return render(request, 'dam/user_galleries.html', {
+        'title': SITE_TITLE,
+        'user': user,
+        'profile': profile,
+        'galleries': galleries
+    })
 
 
 def register(request):

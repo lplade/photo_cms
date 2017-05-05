@@ -2,9 +2,30 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
-            <h1>User profile</h1>
+            <h1>Photoroll</h1>
         </div>
-        <!-- TODO details of user account -->
-        <!-- TODO list of galleries -->
+    </div>
+    <div class="row"><!-- TODO affix UI to right edge -->
+        <div class="col-md-6">
+            Upload link goes here
+        </div>
+    </div>
+    <div class="row">
+        {% for photo in photos %}
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                {# link to the photo #}
+                <a href="{% url 'dam:photo_details' photo_pk=photo.pk %}">
+                    {# render a thumbnail #}
+                    <img class="img-responsive img-thumbnail"
+                         src="{{ photo.proxy_data.url }}"
+                         alt="{{ photo.original_filename }}">
+                </a>
+            </div>
+        {% empty %}
+            <div class="col-md-12">
+                <p class="alert alert-warning">No photos!</p>
+                <!-- TODO invite user to upload something, link -->
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

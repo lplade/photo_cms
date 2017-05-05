@@ -43,15 +43,15 @@ urlpatterns = [
 
     # Displays all the logged in user's photos
     url(
-        r'^user/photoroll/(?P<user_k>\d+)/$',
+        r'^user/photoroll/$',
         views_users.my_photoroll,
-        name='user_photoroll'
+        name='my_photoroll'
     ),
 
     # Displays all the logged in user's galleries
     url(
-        r'^user/galleries/(?P<user_k>\d+)/$',
+        r'^user/galleries/$',
         views_users.my_galleries,
-        name='user_galleries'
+        name='my_galleries'
     )
 ]
