@@ -91,3 +91,9 @@ class UserModificationForm(UserCreationForm):
             raise ValidationError('Please enter an email address')
 
         return email
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('display_name', 'about', 'city', 'state', 'country')

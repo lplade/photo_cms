@@ -26,9 +26,11 @@
     {% block precontainer %}
         {# Stuff that appears before main container (jumbotron) #}
     {% endblock %}
-    {% block content %}
-        {# Page content goes here #}
-    {% endblock %}
+    <div class="container">
+        {% block content %}
+            {# Page content goes here #}
+        {% endblock %}
+    </div>
 
     {% block scripts %}
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
