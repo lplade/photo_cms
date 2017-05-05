@@ -14,12 +14,18 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 
 
+# TODO get from global config file
+SITE_TITLE = 'Photos'
+
+
 def user_profile(request, user_pk):
     user = User.objects.get(pk=user_pk)
     user_galleries = Gallery.objects.filter(owner=user.pk)
 
     return render(request, 'dam/user_profile.html',
-                  {'user': user, 'galleries': user_galleries})
+                  {'user': user,
+                   'galleries': user_galleries,
+                   'title': SITE_TITLE, })
 
 
 @login_required
@@ -45,7 +51,8 @@ def my_user_profile(request):
 
         return render(request, 'dam/user_modify.html',
                       {'form': form,
-                       'profile': profile})
+                       'profile': profile,
+                       'title': SITE_TITLE, })
 
 
 @login_required
@@ -66,11 +73,13 @@ def modify_user(request):
 
         else:
             return render(request, 'dam/user_change_password.html',
-                          {'form': form})
+                          {'form': form,
+                           'title': SITE_TITLE, })
     else:
         form = UserModificationForm()
         return render(request, 'dam/user_change_password.html',
-                      {'form': form})
+                      {'form': form,
+                       'title': SITE_TITLE, })
 
 
 @login_required
@@ -96,12 +105,14 @@ def register(request):
             return redirect('dam:homepage')
         else:
             message = 'Please check the data you entered'
-            return render(request, 'registration/register.html',
-                          {'form': form, 'message': message})
+            return render(request,
+                          'dam/user_register.html',
+                          {'form': form, 'message': message,
+                           'title': SITE_TITLE, })
     else:
         form = UserRegistrationForm()
-        return render(request, 'registration/register.html',
-                      {'form': form})
+        return render(request, 'dam/user_register.html',
+                      {'form': form, 'title': SITE_TITLE, })
 
 
 def logout_message(request):
@@ -110,5 +121,5 @@ def logout_message(request):
     :param request: 
     :return: 
     """
-    return render(request, 'registration/logout_message.html')
+    return render(request, 'dam/auth_logout.html')
 
