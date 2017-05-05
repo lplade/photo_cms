@@ -18,7 +18,7 @@ def user_profile(request, user_pk):
     user = User.objects.get(pk=user_pk)
     user_galleries = Gallery.objects.filter(owner=user.pk)
 
-    return render(request, 'dam/users/user_profile.html',
+    return render(request, 'dam/user_profile.html',
                   {'user': user, 'galleries': user_galleries})
 
 
@@ -43,7 +43,7 @@ def my_user_profile(request):
             profile.country = data['country']
             profile.save()
 
-        return render(request, 'dam/users/modify_user.html',
+        return render(request, 'dam/user_modify.html',
                       {'form': form,
                        'profile': profile})
 
@@ -65,11 +65,11 @@ def modify_user(request):
             return redirect('dam:index')
 
         else:
-            return render(request, 'dam/users/change_password.html',
+            return render(request, 'dam/user_change_password.html',
                           {'form': form})
     else:
         form = UserModificationForm()
-        return render(request, 'dam/users/change_password.html',
+        return render(request, 'dam/user_change_password.html',
                       {'form': form})
 
 
@@ -110,5 +110,5 @@ def logout_message(request):
     :param request: 
     :return: 
     """
-    return render(request, 'dam/users/logout_message.html')
+    return render(request, 'registration/logout_message.html')
 
