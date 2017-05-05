@@ -31,7 +31,7 @@ def user_profile(request, user_pk):
 @login_required
 @transaction.atomic
 def my_user_profile(request):
-    # If no Profile is associated with User, create a Profile for tha tUser
+    # If no Profile is associated with User, create a Profile for that User
     try:
         profile = request.user.profile
     except ObjectDoesNotExist:
@@ -97,7 +97,13 @@ def modify_user(request):
 @login_required
 def my_photoroll(request):
     user = request.user
-    profile = request.user.profile
+
+    # Catch if Profile is not set up and prompt user to enter details
+    try:
+        profile = request.user.profile
+    except ObjectDoesNotExist:
+        return redirect('dam:my_user_profile')
+
     photos = Photo.objects.filter(owner=request.user)\
         .order_by('created_datetime')[:100]  # TODO order by Exif created tag
     # TODO get the full list and use JS to limit # displayed
