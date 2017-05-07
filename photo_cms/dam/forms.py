@@ -110,3 +110,9 @@ class PhotoDetailForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = ('caption',)
+
+
+class PhotoDeleteForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = []
