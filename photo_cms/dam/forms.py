@@ -98,3 +98,15 @@ class UserProfileForm(forms.ModelForm):
         model = Profile
         fields = ('display_name', 'about', 'city', 'state', 'country')
         # TODO validate display_name to not blank
+
+
+class PhotoUploadForm(forms.Form):
+    image = forms.ImageField(
+        label='Select an image'
+    )
+
+
+class PhotoDetailForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = ('caption',)

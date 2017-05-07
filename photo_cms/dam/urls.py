@@ -61,5 +61,11 @@ urlpatterns = [
         r'^photo/(?P<photo_pk>\d+)/$',
         views_photos.photo_details,
         name='photo_details'
+    ),
+
+    url(
+        r'^photo/upload/$',
+        views_photos.photo_upload,
+        name='photo_upload'
     )
 ]

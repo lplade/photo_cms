@@ -11,6 +11,8 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 from io import BytesIO
 import exifread
+from django.utils.encoding import DjangoUnicodeDecodeError
+
 from .validators import file_size
 
 
@@ -176,13 +178,20 @@ class Photo(models.Model):
 
         # Read Exif tags from JPEG
         self.exif_tags = self.get_exif()
+        # Crashes when image submitted through form, catch in signals
+        #self.exif_tags = {}
 
         # Generate a thumbnail
         # http://stackoverflow.com/a/43011898/7087237
         if not self.make_thumbnail():
             raise Exception('Could not create thumbnail')
 
-        super(Photo, self).save(*args, **kwargs)
+        force_update = False
+        # If it has already been saved, we can force update
+        if self.id:
+            force_update = True
+
+        super(Photo, self).save(force_update=force_update, *args, **kwargs)
 
     def get_format(self):
         """
@@ -197,16 +206,25 @@ class Photo(models.Model):
         Uses exifread to get Exif tags
         :return: dict of tags
         """
+        _tags = {}
+        try:
+            image = Image.open(self.image_data)
+            exif = image._getexif()
+            if exif:
+                for tag, value in exif.items():
+                    decoded = TAGS.get(tag, tag)
+                    _tags[decoded] = value
+
         # Note: exifread provides better READING of Exif than Pillow,
         # but can't write any changes.
-        _tags = {}
-        image = Image.open(self.image_data)
-        exif = image._getexif()
-        for tag, value in exif.items():
-            decoded = TAGS.get(tag, tag)
-            _tags[decoded] = value
-        #_exif_tags = exifread.process_file(self.image_data, details=False)
+        # _exif_tags = exifread.process_file(self.image_data, details=False)
         # assert _exif_tags is not None
+
+        except DjangoUnicodeDecodeError:
+            # There's an error parsing when we create
+            # an instance from form upload
+            pass
+
         return _tags
 
     def make_thumbnail(self):
@@ -220,6 +238,9 @@ class Photo(models.Model):
         # make sure image data is set
         if not self.image_data:
             return False
+
+        if self.proxy_data:
+            return True
 
         # Create a resized version of the image
         image = Image.open(self.image_data)
