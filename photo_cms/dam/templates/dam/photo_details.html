@@ -9,8 +9,13 @@
         <div class="col-lg-8 col-md-12">
             <img class="img-responsive"
                  src="{{ photo.image_data.url }}" alt="{{ photo.original_filename }}">
-            <p>Put the notes form down here</p>
-            <p><a href="{% url 'dam:photo_delete' photo_pk=photo.pk %}">Delete</a></p>
+            <form method="post" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
+            </form>
+
+            <p><a class="btn btn-danger" href="{% url 'dam:photo_delete' photo_pk=photo.pk %}">Delete</a></p>
         </div>
         <div class="col-lg-4 col-md-12">
             <p>{{ photo.original_filename }}</p>

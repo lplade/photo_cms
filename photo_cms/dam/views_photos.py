@@ -23,8 +23,21 @@ SITE_TITLE = 'Photos'
 @login_required
 def photo_details(request, photo_pk):
     photo = Photo.objects.get(pk=photo_pk)
+
+    if request.method == 'POST':
+        form = PhotoDetailForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            photo.caption = data['caption']
+            # Any other editable fields will go here
+            photo.save()
+    else:
+        form = PhotoDetailForm()
+
     return render(request, 'dam/photo_details.html',
-                  {'photo': photo, 'title': SITE_TITLE})
+                  {'form': form,
+                   'photo': photo,
+                   'title': SITE_TITLE})
 
 
 # https://coderwall.com/p/bz0sng/simple-django-image-upload-to-model-imagefield

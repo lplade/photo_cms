@@ -110,9 +110,12 @@ class PhotoDetailForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = ('caption',)
+        widgets = {
+            'caption': forms.Textarea(attrs={'rows': 4, 'cols': 80})
+        }
 
 
 class PhotoDeleteForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = []
+        fields = ()
