@@ -164,5 +164,5 @@ def logout_message(request):
     :param request: 
     :return: 
     """
-    return render(request, 'dam/auth_logout.html')
+    return render(request, 'dam/auth_logout.html', {'title': SITE_TITLE})
 

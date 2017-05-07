@@ -9,13 +9,13 @@ urlpatterns = [
 
     # Home page #
 
-    url(r'^$', views.home, name='index'),
+    url(r'^$', views.home, name='homepage'),
 
     # User #
 
     # Publically accessible user profile
     url(
-        r'^user/profile/(?P<user_k>\d+)/$',
+        r'^user/profile/(?P<user_pk>\d+)/$',
         views_users.user_profile,
         name='user_profile'
     ),
