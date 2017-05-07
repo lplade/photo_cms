@@ -34,7 +34,7 @@ def photo_upload(request):
         if form.is_valid() and request.FILES:
             photo = Photo(owner=request.user, image_data=request.FILES['image'])
             photo.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/user/photoroll')
 
     else:
         form = PhotoUploadForm()

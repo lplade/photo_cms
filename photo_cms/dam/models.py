@@ -207,23 +207,21 @@ class Photo(models.Model):
         :return: dict of tags
         """
         _tags = {}
-        try:
-            image = Image.open(self.image_data)
-            exif = image._getexif()
-            if exif:
-                for tag, value in exif.items():
-                    decoded = TAGS.get(tag, tag)
-                    _tags[decoded] = value
+        image = Image.open(self.image_data)
+
+        exif = image._getexif()
+        if exif:
+            for tag, value in exif.items():
+                decoded = TAGS.get(tag, tag)
+                # Some cameras have non-Unicode Exif tags,
+                # so be sure to cast them or we crash
+                # TODO filter MakerNote
+                _tags[str(decoded)] = str(value)
 
         # Note: exifread provides better READING of Exif than Pillow,
         # but can't write any changes.
         # _exif_tags = exifread.process_file(self.image_data, details=False)
         # assert _exif_tags is not None
-
-        except DjangoUnicodeDecodeError:
-            # There's an error parsing when we create
-            # an instance from form upload
-            pass
 
         return _tags
 
