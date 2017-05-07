@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from . import views, views_users
+from . import views, views_users, views_photos
 
 app_name = 'dam'
 
@@ -53,5 +53,13 @@ urlpatterns = [
         r'^user/galleries/$',
         views_users.my_galleries,
         name='my_galleries'
+    ),
+
+    # Photo #
+
+    url(
+        r'^photo/(?P<photo_pk>\d+)/$',
+        views_photos.photo_details,
+        name='photo_details'
     )
 ]

@@ -1,0 +1,18 @@
+{% extends 'dam/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Photo details</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-md-12">
+            <img class="img-responsive"
+                 src="{{ photo.image_data.url }}" alt="{{ photo.original_filename }}">
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <!-- TODO show metadata -->
+            Details appear here
+        </div>
+    </div>
+{% endblock %}

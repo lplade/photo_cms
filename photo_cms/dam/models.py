@@ -6,10 +6,12 @@ from django.core.files.base import ContentFile
 from django.contrib.postgres.fields import HStoreField
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
+from django.core.files.storage import default_storage as storage
 from PIL import Image
 from io import BytesIO
 import exifread
 from .validators import file_size
+
 
 # TODO import this from app settings
 THUMBNAIL_SIZE = (200, 200)
@@ -32,7 +34,7 @@ def _gen_image_filename(instance, filename):
     # First, store the original filename in the model
     instance.original_filename = filename
 
-    return _unique_path(instance.user.user.id, filename)
+    return _unique_path(instance.owner.pk, filename)
 
 
 def _unique_path(user_id, filename, category='images'):
@@ -43,21 +45,22 @@ def _unique_path(user_id, filename, category='images'):
     :param filename: original filename
     :return: Something like 'images/23/a5497075-c81d-499c-9aeb-326c4047dfe3.jpg'
     """
-    ext = filename.split('.')[-1]
-    filename = '{}.{}'.format(uuid.uuid4(), ext)
-    return os.path.join(category, user_id, filename)
+    ext = os.path.splitext(filename)[-1]
+    new_filename = '{}{}'.format(uuid.uuid4(), ext)
+    return os.path.join(category, str(user_id), new_filename)
 
 
 def _gen_thumbs_filename(instance, filename):
     """
     Generates a path to store thumbnail.
-    :param instance: instance of calling class
+    :param instance: calling Photo
     :param filename: filename of 'uploaded' object
     :return: Something like 'thumbs/23/a5497075-c81d-499c-9aeb-326c4047dfe3_thumb.jpeg'
     """
-    return os.path.join(
-        'thumbs', instance.user.user.id, filename
-    )
+    return _unique_path(instance.owner.pk, filename, category='thumbs')
+    #return os.path.join(
+    #    'thumbs', str(instance.owner.pk), filename
+    #)
 
 
 # Models #
@@ -96,6 +99,9 @@ class Gallery(models.Model):
     created_datetime = models.DateTimeField(default=timezone.now)
     modified_datetime = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        verbose_name_plural = 'galleries'
+
     def __str__(self):
         photo_count = len(self.photos)
         return '{} ({} photos)'.format(self.name, photo_count)
@@ -110,44 +116,55 @@ class Photo(models.Model):
     """
     Represents a single image including metadata
     """
+
+    # Model improved with help from
+    # https://djangosnippets.org/snippets/2094/
+
     owner = models.ForeignKey('auth.User', blank=False)
     # We will use UUID as filename (36 chars)
     image_data = models.ImageField(
         upload_to=_gen_image_filename,
-        max_length=64,
-        width_field='width', height_field='height',
+        width_field='image_width', height_field='image_height',
         validators=[file_size]
     )
-    format = models.CharField(max_length=8)
+    # Should be auto-populated by ImageField
+    image_height = models.IntegerField(blank=True, editable=False)
+    image_width = models.IntegerField(blank=True, editable=False)
+
+    format = models.CharField(max_length=8, blank=True, editable=False)
+
     proxy_data = models.ImageField(  # "thumbnail"
         upload_to=_gen_thumbs_filename,
-        max_length=64,
+        width_field='proxy_width', height_field='proxy_height',
         null=True,
-        blank=True
+        blank=True,
+        editable=False
     )
-    original_filename = models.TextField()
+    proxy_height = models.IntegerField(null=True, blank=True, editable=False)
+    proxy_width = models.IntegerField(null=True, blank=True, editable=False)
+
+    original_filename = models.TextField(blank=True)
     created_datetime = models.DateTimeField(default=timezone.now)
     modified_datetime = models.DateTimeField(default=timezone.now)
-
-    # Should be auto-populated by ImageField
-    height = models.IntegerField()
-    width = models.IntegerField()
 
     # HStoreField is Postgres-specific, stores a dict
     # Needs to be enabled on Postgres side too
     # https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#hstorefield
-    exif_tags = HStoreField()
+    exif_tags = HStoreField(blank=True)
     # TODO store tags in own table for querying
 
     # List of galleries this photo is in
-    galleries = models.ManyToManyField(Gallery, related_name='photos')
+    galleries = models.ManyToManyField(Gallery,
+                                       related_name='photos',
+                                       blank=True)
 
+    caption = models.CharField(max_length=255, blank=True)
     # TODO GPS data (should be in exifread dict)
     # TODO XMP data?
     # TODO IPTC-IIM data?
 
     def __str__(self):
-        return '{}.{}'.format(self.original_filename, self.format.lower())
+        return '{}@{}'.format(self.original_filename, self.image_data.name)
 
     def save(self, *args, **kwargs):
 
@@ -162,12 +179,33 @@ class Photo(models.Model):
         if self.exif_tags is None:
             self.exif_tags = self.get_exif()
 
-        # Generate a thumbnail
-        # http://stackoverflow.com/a/43011898/7087237
-        if not self.make_thumbnail():
-            raise Exception('Could not create thumbnail')
+        image = Image.open(self.image_data)
+        image.thumbnail(THUMBNAIL_SIZE, Image.BICUBIC)
+
+        temp_handle = BytesIO()
+        image.save(temp_handle, 'jpeg')
+        temp_handle.seek(0)
+
+        # Save image to a SimpleUploadFile which can be saved
+        # into ImageField
+        basename = os.path.basename(self.image_data.name)
+        uuidname = os.path.splitext(basename)[0]
+        suf = SimpleUploadedFile(uuidname,
+                                 temp_handle.read(), content_type='image/jpeg')
+        thumb_filename = '{}_thumb.jpeg'.format(suf.name)
+
+        # set save=False, or else it will infinite loop
+        self.proxy_data.save(thumb_filename,
+                             suf,
+                             save=False)
+        self.proxy_width, self.proxy_height = image.size
 
         super(Photo, self).save(*args, **kwargs)
+
+        # Generate a thumbnail
+        # http://stackoverflow.com/a/43011898/7087237
+        #if not self.make_thumbnail():
+        #    raise Exception('Could not create thumbnail')
 
     def get_format(self):
         """
@@ -207,17 +245,19 @@ class Photo(models.Model):
         # Save the thumbnail to in-memory 'file'
         temp_thumb = BytesIO()
         image.save(temp_thumb, 'jpeg')
-        temp_thumb.seek(0)
+        temp_thumb.seek(0)  # rewinds the file
 
         # Save image to a SimpleUploadFile which can be saved
         # into ImageField
-        suf = SimpleUploadedFile(os.path.split(self.image_data.name)[-1],
-                                 temp_thumb.read(), content_type='jpeg')
+        basename = os.path.basename(self.image_data.name)
+        uuidname = os.path.splitext(basename)[0]
+        suf = SimpleUploadedFile(uuidname,
+                                 temp_thumb.read(), content_type='image/jpeg')
         thumb_filename = '{}_thumb.jpeg'.format(suf.name)
 
         # set save=False, or else it will infinite loop
         self.proxy_data.save(thumb_filename,
-                             ContentFile(temp_thumb.read()),
+                             suf,
                              save=False)
         temp_thumb.close()
 

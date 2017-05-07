@@ -107,6 +107,7 @@ def my_photoroll(request):
     photos = Photo.objects.filter(owner=request.user)\
         .order_by('created_datetime')[:100]  # TODO order by Exif created tag
     # TODO get the full list and use JS to limit # displayed
+
     return render(request, 'dam/user_photoroll.html', {
         'title': SITE_TITLE,
         'user': user,
