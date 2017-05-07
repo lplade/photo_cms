@@ -8,6 +8,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage as storage
 from PIL import Image
+from PIL.ExifTags import TAGS
 from io import BytesIO
 import exifread
 from .validators import file_size
@@ -55,12 +56,9 @@ def _gen_thumbs_filename(instance, filename):
     Generates a path to store thumbnail.
     :param instance: calling Photo
     :param filename: filename of 'uploaded' object
-    :return: Something like 'thumbs/23/a5497075-c81d-499c-9aeb-326c4047dfe3_thumb.jpeg'
+    :return: Something like 'thumbs/23/a5497075-c81d-499c-9aeb-326c4047dfe3.jpeg'
     """
     return _unique_path(instance.owner.pk, filename, category='thumbs')
-    #return os.path.join(
-    #    'thumbs', str(instance.owner.pk), filename
-    #)
 
 
 # Models #
@@ -153,15 +151,16 @@ class Photo(models.Model):
     exif_tags = HStoreField(blank=True)
     # TODO store tags in own table for querying
 
+    # TODO GPS data (should be in exifread dict)
+    # TODO XMP data?
+    # TODO IPTC-IIM data?
+
     # List of galleries this photo is in
     galleries = models.ManyToManyField(Gallery,
                                        related_name='photos',
                                        blank=True)
 
     caption = models.CharField(max_length=255, blank=True)
-    # TODO GPS data (should be in exifread dict)
-    # TODO XMP data?
-    # TODO IPTC-IIM data?
 
     def __str__(self):
         return '{}@{}'.format(self.original_filename, self.image_data.name)
@@ -176,36 +175,14 @@ class Photo(models.Model):
             self.format = self.get_format()
 
         # Read Exif tags from JPEG
-        if self.exif_tags is None:
-            self.exif_tags = self.get_exif()
-
-        image = Image.open(self.image_data)
-        image.thumbnail(THUMBNAIL_SIZE, Image.BICUBIC)
-
-        temp_handle = BytesIO()
-        image.save(temp_handle, 'jpeg')
-        temp_handle.seek(0)
-
-        # Save image to a SimpleUploadFile which can be saved
-        # into ImageField
-        basename = os.path.basename(self.image_data.name)
-        uuidname = os.path.splitext(basename)[0]
-        suf = SimpleUploadedFile(uuidname,
-                                 temp_handle.read(), content_type='image/jpeg')
-        thumb_filename = '{}_thumb.jpeg'.format(suf.name)
-
-        # set save=False, or else it will infinite loop
-        self.proxy_data.save(thumb_filename,
-                             suf,
-                             save=False)
-        self.proxy_width, self.proxy_height = image.size
-
-        super(Photo, self).save(*args, **kwargs)
+        self.exif_tags = self.get_exif()
 
         # Generate a thumbnail
         # http://stackoverflow.com/a/43011898/7087237
-        #if not self.make_thumbnail():
-        #    raise Exception('Could not create thumbnail')
+        if not self.make_thumbnail():
+            raise Exception('Could not create thumbnail')
+
+        super(Photo, self).save(*args, **kwargs)
 
     def get_format(self):
         """
@@ -222,9 +199,15 @@ class Photo(models.Model):
         """
         # Note: exifread provides better READING of Exif than Pillow,
         # but can't write any changes.
+        _tags = {}
         image = Image.open(self.image_data)
-        _exif_tags = exifread.process_file(image)
-        return _exif_tags
+        exif = image._getexif()
+        for tag, value in exif.items():
+            decoded = TAGS.get(tag, tag)
+            _tags[decoded] = value
+        #_exif_tags = exifread.process_file(self.image_data, details=False)
+        # assert _exif_tags is not None
+        return _tags
 
     def make_thumbnail(self):
         """
@@ -249,6 +232,8 @@ class Photo(models.Model):
 
         # Save image to a SimpleUploadFile which can be saved
         # into ImageField
+        # TODO figure out how to pass base image's UUID before
+        # image is committed to DB
         basename = os.path.basename(self.image_data.name)
         uuidname = os.path.splitext(basename)[0]
         suf = SimpleUploadedFile(uuidname,
@@ -259,6 +244,10 @@ class Photo(models.Model):
         self.proxy_data.save(thumb_filename,
                              suf,
                              save=False)
+
+        # Also store the real dimensions for the Pillow thumbnail
+        self.proxy_width, self.proxy_height = image.size
+
         temp_thumb.close()
 
         return True
