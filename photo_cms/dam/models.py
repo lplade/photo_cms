@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django.utils import timezone
 from django.core.files.base import ContentFile
-from django.contrib.postgres.fields import HStoreField
+from django.contrib.postgres.fields import HStoreField, ArrayField
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage as storage
@@ -18,6 +18,10 @@ from .validators import file_size
 
 # TODO import this from app settings
 THUMBNAIL_SIZE = (200, 200)
+
+# List of exif tags to not store
+# Includes binary and proprietary data
+IGNORE_TAGS = ('GPSInfo', 'MakerNote', 'UserComment', 'ComponentsConfiguration')
 
 # Override default User fields
 User._meta.get_field('email')._unique = True
@@ -61,6 +65,65 @@ def _gen_thumbs_filename(instance, filename):
     :return: Something like 'thumbs/23/a5497075-c81d-499c-9aeb-326c4047dfe3.jpeg'
     """
     return _unique_path(instance.owner.pk, filename, category='thumbs')
+
+
+class FractionDict:
+    """
+    Simple class to store a fraction of integers
+    """
+
+    def __init__(self, numerator, denominator):
+        """
+
+        :param numerator: integer numerator
+        :param denominator: integer denominator
+        """
+        self.numerator = int(numerator)
+        self.denominator = int(denominator)
+
+    def get_as_dict(self):
+        """
+        Returns the fraction as a dictionary {'numerator', 'denominator'}
+        :return: Dictionary with keys 'numerator' and 'denominator'
+        """
+        return {'numerator': self.numerator,
+                'denominator': self.denominator}
+
+    def get_as_float(self):
+        """
+        Returns the mathematical value of the fraction
+        :return: Float of numerator / denominator
+        """
+        return float(self.numerator / self.denominator)
+
+    def set_by_dict(self, dictionary):
+        """
+        Stores numerator and denominator by dict with keys 'numerator' and 
+        'denominator'
+        :param dictionary: dict with keys 'numerator' and 'denominator'
+        :return: True if no error
+        """
+        assert 'numerator' in dictionary and 'denominator' in dictionary
+        self.numerator = int(dictionary['numerator'])
+        self.denominator = int(dictionary['denominator'])
+        return True
+
+    def set_by_list(self, _list):
+        """
+        Store numerator and denominator by list [numerator, denominator]
+        :param _list: list of [numerator, denominator]
+        :return: True if no error
+        """
+        assert _list.length == 2
+        self.numerator = int(_list[0])
+        self.denominator = int(_list[1])
+        return True
+
+    def __repr__(self):
+        return self.get_as_dict()
+
+    def __str__(self):
+        return '{}/{}'.format(self.numerator, self.denominator)
 
 
 # Models #
@@ -178,8 +241,6 @@ class Photo(models.Model):
 
         # Read Exif tags from JPEG
         self.exif_tags = self.get_exif()
-        # Crashes when image submitted through form, catch in signals
-        #self.exif_tags = {}
 
         # Generate a thumbnail
         # http://stackoverflow.com/a/43011898/7087237
@@ -212,11 +273,13 @@ class Photo(models.Model):
         exif = image._getexif()
         if exif:
             for tag, value in exif.items():
-                decoded = TAGS.get(tag, tag)
-                # Some cameras have non-Unicode Exif tags,
-                # so be sure to cast them or we crash
-                # TODO filter MakerNote
-                _tags[str(decoded)] = str(value)
+
+                # Skip any tags we don't want
+                if tag not in IGNORE_TAGS:
+                    decoded = TAGS.get(tag, tag)
+                    # Some cameras have non-Unicode Exif tags,
+                    # so be sure to cast them or we crash
+                    _tags[str(decoded)] = str(value)
 
         # Note: exifread provides better READING of Exif than Pillow,
         # but can't write any changes.
@@ -270,4 +333,96 @@ class Photo(models.Model):
         temp_thumb.close()
 
         return True
+
+
+class ExifTag(models.Model):
+    photo = models.OneToOneField(
+        Photo,
+        on_delete=models.CASCADE,
+        related_name='exif'
+    )
+    # ISOSpeedRatings
+    iso_speed_ratings = models.IntegerField
+    # Make
+    make = models.CharField(max_length=128, blank=True)
+    # Model
+    model = models.CharField(max_length=128, blank=True)
+    # FNumber (n, d)
+    _f_number = HStoreField(blank=True)
+    # FocalLength (n, d)
+    _focal_length = HStoreField(blank=True)
+    # ExposureTime (n, d)
+    _exposure_time = HStoreField(blank=True)
+    # Copyright
+    # Artist
+    # UniqueCameraModel
+    # Software
+    # ImageLength
+    # ImageWidth
+    # XResolution
+    # YResolution
+    # DateTime
+    # DateTimeOriginal
+    # Orientation
+    # DateTimeDigitized
+    # FocalLengthIn35mmFilm
+    # ExposureBiasValue
+
+    def __str__(self):
+        return "Exif data for {}".format(self.photo)
+
+    # TODO subclass fraction from HStoreField or ArrayField
+
+    # These methods behave as fields that map HStoreField to a FractionDict
+
+    def f_number(self, numerator=None, denominator=None):
+        # 'setter'
+        if numerator and denominator:
+            fraction = FractionDict(numerator, denominator)
+            self._f_number = fraction.get_as_dict()
+
+        # 'getter'
+        else:
+            if 'numerator' in self._f_number \
+                    and 'denominator' in self._f_number:
+                fraction = FractionDict(
+                    self._f_number['numerator'],
+                    self._f_number['denominator'])
+            else:
+                fraction = None
+        return fraction
+
+    def focal_length(self, numerator=None, denominator=None):
+        # 'setter'
+        if numerator and denominator:
+            fraction = FractionDict(numerator, denominator)
+            self._focal_length = fraction.get_as_dict()
+
+        # 'getter'
+        else:
+            if 'numerator' in self._focal_length \
+                    and 'denominator' in self._focal_length:
+                fraction = FractionDict(
+                    self._focal_length['numerator'],
+                    self._focal_length['denominator'])
+            else:
+                fraction = None
+        return fraction
+
+    def exposure_time(self, numerator=None, denominator=None):
+        # 'setter'
+        if numerator and denominator:
+            fraction = FractionDict(numerator, denominator)
+            self._exposure_time = fraction.get_as_dict()
+
+        # 'getter'
+        else:
+            if 'numerator' in self._exposure_time \
+                    and 'denominator' in self._exposure_time:
+                fraction = FractionDict(
+                    self._exposure_time['numerator'],
+                    self._exposure_time['denominator'])
+            else:
+                fraction = None
+        return fraction
 
