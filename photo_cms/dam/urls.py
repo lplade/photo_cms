@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from . import views, views_users, views_photos
+from . import views, views_users, views_photos, views_galleries
 
 app_name = 'dam'
 
@@ -13,7 +13,7 @@ urlpatterns = [
 
     # User #
 
-    # Publically accessible user profile
+    # Publicly accessible user profile
     url(
         r'^user/profile/(?P<user_pk>\d+)/$',
         views_users.user_profile,
@@ -73,5 +73,25 @@ urlpatterns = [
         r'^photo/delete/(?P<photo_pk>\d+)/$',
         views_photos.photo_delete,
         name='photo_delete'
+    ),
+
+    # Gallery #
+
+    url(
+        r'^gallery/(?P<gallery_pk>\d+)/$',
+        views_galleries.gallery_details,
+        name='gallery_details'
+    ),
+
+    url(
+        r'^gallery/create/$}',
+        views_galleries.gallery_create,
+        name='gallery_create'
+    ),
+
+    url(
+        r'^gallery/delete/(?P<gallery_pk>\d+)/$',
+        views_galleries.gallery_delete,
+        name='gallery_delete'
     )
 ]

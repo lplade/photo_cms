@@ -1,0 +1,34 @@
+{% extends 'dam/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Gallery <small>{{ gallery.name }}</small></h1>
+            <p><small>{{ gallery.description }}</small></p>
+            {# TODO form to edit name/description (js?) #}
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Button to add photos goes here
+            </div>
+        </div>
+        <div class="row">
+            {% for photo in photos %}
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                {# link to the photo #}
+                {# TODO use lightbox here? #}
+                    <a href="{% url 'dam:photo_details' photo_pk=photo.pk %}">
+                        {# render a thumbnail #}
+                        <img class="img-responsive img-thumbnail"
+                             src="{{ photo.proxy_data.url }}"
+                             alt="{{ photo.original_filename }}">
+                    </a>
+                </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <p class="alert alert-warning">No photos!</p>
+                    <!-- TODO link to add photos -->
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

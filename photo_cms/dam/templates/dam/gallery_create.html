@@ -1,0 +1,17 @@
+{% extends 'dam/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>New gallery</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" action="{% url 'dam:gallery_create' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Create">
+            </form>
+        </div>
+    </div>
+{% endblock %}

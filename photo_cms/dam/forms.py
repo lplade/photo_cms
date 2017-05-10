@@ -111,6 +111,7 @@ class PhotoDetailForm(forms.ModelForm):
         model = Photo
         fields = ('caption',)
         widgets = {
+            # Make the caption field nice and big
             'caption': forms.Textarea(attrs={'rows': 4, 'cols': 80})
         }
 
@@ -118,4 +119,22 @@ class PhotoDetailForm(forms.ModelForm):
 class PhotoDeleteForm(forms.ModelForm):
     class Meta:
         model = Photo
+        fields = ()
+
+
+class GalleryDetailForm(forms.ModelForm):
+    class Meta:
+        model = Gallery
+        fields = ('name', 'description')
+
+
+class GalleryCreateForm(forms.ModelForm):
+    class Meta:
+        model = Gallery
+        fields = ('name', 'description')
+
+
+class GalleryDeleteForm(forms.ModelForm):
+    class Meta:
+        model = Gallery
         fields = ()
