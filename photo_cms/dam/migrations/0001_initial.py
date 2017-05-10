@@ -21,7 +21,9 @@ class Migration(migrations.Migration):
 
     operations = [
         # Enable Postgres hstore - need to be Postgres superuser
-        # HStoreExtension(),
+        # Comment line below out on local instance as needed and
+        # set from psql console instead
+        HStoreExtension(),
         # Auto-generated migration follows
         migrations.CreateModel(
             name='Photo',

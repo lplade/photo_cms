@@ -3,7 +3,7 @@ awsebcli==3.10.1
 Babel==2.4.0
 blessed==1.14.2
 boto3==1.4.4
-botocore==1.5.45
+botocore==1.5.47
 cement==2.8.2
 colorama==0.3.7
 Django==1.11
