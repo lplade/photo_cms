@@ -164,10 +164,10 @@ if ('AWS_ACCESS_KEY ID' in os.environ) and ('AWS_SECRET_KEY' in os.environ):
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
     MEDIAFILES_LOCATION = 'media/'
-    MEDIA_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
     STATICFILES_LOCATION = 'static/'
-    STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
     DEFAULT_FILE_STORAGE = 'photo_cms.custom_storages.MediaStorage'
     STATICFILES_STORAGE = 'photo_cms.custom_storages.StaticStorage'
