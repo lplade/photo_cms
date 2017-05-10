@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',  # Need this for hstore support
-    'dam',  # main digital asset manager app
     'storages',  # S3 storage
+    'dam',  # main digital asset manager app
 ]
 
 MIDDLEWARE = [
@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -103,6 +104,10 @@ else:
         }
     }
 
+# authentication backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # default password based
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -126,10 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# authentication backends
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',  # default password based
-)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -152,7 +153,7 @@ LOGOUT_REDIRECT_URL = 'dam:homepage'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-if ('AWS_ACCESS_KEY ID' in os.environ) and ('AWS_SECRET_KEY' in os.environ):
+if ('AWS_ACCESS_KEY_ID' in os.environ) and ('AWS_SECRET_KEY' in os.environ):
     AWS_STORAGE_BUCKET_NAME = 'photo-cms-files'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
