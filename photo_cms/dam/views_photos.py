@@ -29,6 +29,7 @@ def photo_details(request, photo_pk):
         if form.is_valid():
             data = form.cleaned_data
             photo.caption = data['caption']
+            photo.galleries = data['galleries']
             # Any other editable fields will go here
             photo.save()
     else:

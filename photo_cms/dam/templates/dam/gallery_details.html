@@ -2,13 +2,16 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
-            <h1>Gallery <small>{{ gallery.name }}</small></h1>
+            <h1><small>Gallery</small> {{ gallery.name }}</h1>
             <p><small>{{ gallery.description }}</small></p>
             {# TODO form to edit name/description (js?) #}
         </div>
         <div class="row">
             <div class="col-md-6">
                 Button to add photos goes here
+            </div>
+            <div class="col-md-6">
+                Button to delete gallery goes here
             </div>
         </div>
         <div class="row">

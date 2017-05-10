@@ -18,11 +18,23 @@
             <p><a class="btn btn-danger" href="{% url 'dam:photo_delete' photo_pk=photo.pk %}">Delete</a></p>
         </div>
         <div class="col-lg-4 col-md-12">
-            <p>{{ photo.original_filename }}</p>
-            <p>Uploaded: {{ photo.created_datetime }}</p>
-            <p>Modified: {{ photo.modified_datetime }}</p>
-            <h2>Exif</h2>
             <div class="table-responsive">
+            <h2>Details</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>Filename</td>
+                        <td>{{ photo.original_filename }}</td>
+                    </tr>
+                    <tr>
+                        <td>Uploaded</td>
+                        <td>{{ photo.created_datetime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Modified</td>
+                        <td>{{ photo.modified_datetime }}</td>
+                    </tr>
+                </table>
+                <h2>Exif</h2>
                 <table class="table table-condensed table-striped">
                     <tr>
                         <th>Tag</th>

@@ -166,7 +166,7 @@ class Gallery(models.Model):
         verbose_name_plural = 'galleries'
 
     def __str__(self):
-        photo_count = len(self.photos)
+        photo_count = self.photos.count()
         return '{} ({} photos)'.format(self.name, photo_count)
 
     def save(self, *args, **kwargs):

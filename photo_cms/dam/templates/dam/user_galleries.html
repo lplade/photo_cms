@@ -2,8 +2,45 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
-            <h1>Galleries</h1>
+            <h1>Your galleries</h1>
         </div>
-    <!-- TODO galleries go here -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'dam:gallery_create' %}">Create a new gallery</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <!-- TODO a thumbnail from each gallery should appear here -->
+                    <tr>
+                        <th>Gallery</th>
+                        <th>Description</th>
+                        <th>Photos</th>
+                        <th>Created</th>
+                    </tr>
+                    {% for gallery in galleries %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'dam:gallery_details' gallery_pk=gallery.pk %}">
+                                {{ gallery.name }}
+                            </a>
+                        </td>
+                        <td>{{ gallery.description|truncatechars:20 }}</td>
+                        {# photos_set should be backref #}
+                        <td>{{ gallery.photos.count }}</td>
+                        {# TODO prettier date formatting #}
+                        <td>{{ gallery.created_datetime }}</td>
+                    </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">No galleries!</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

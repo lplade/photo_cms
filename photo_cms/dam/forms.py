@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.forms import ValidationError
 
 
+# User/Profile #
+
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:
@@ -100,6 +102,8 @@ class UserProfileForm(forms.ModelForm):
         # TODO validate display_name to not blank
 
 
+# Photo #
+
 class PhotoUploadForm(forms.Form):
     image = forms.ImageField(
         label='Select an image'
@@ -109,11 +113,20 @@ class PhotoUploadForm(forms.Form):
 class PhotoDetailForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ('caption',)
+        fields = ('caption', 'galleries')
         widgets = {
             # Make the caption field nice and big
-            'caption': forms.Textarea(attrs={'rows': 4, 'cols': 80})
+            'caption': forms.Textarea(attrs={'rows': 3, 'cols': 80}),
+            'galleries': forms.CheckboxSelectMultiple,
         }
+
+    # def __init__(self, *args, **kwargs):
+    #     super(PhotoDetailForm, self).__init__(*args, **kwargs)
+    #     self.fields['galleries'] = forms.ModelMultipleChoiceField(
+    #         queryset=Gallery.objects.all(),
+    #         to_field_name='name',
+    #         # empty_label="Choose galleries"
+    #     )
 
 
 class PhotoDeleteForm(forms.ModelForm):
@@ -121,6 +134,8 @@ class PhotoDeleteForm(forms.ModelForm):
         model = Photo
         fields = ()
 
+
+# Gallery #
 
 class GalleryDetailForm(forms.ModelForm):
     class Meta:

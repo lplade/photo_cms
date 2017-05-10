@@ -84,7 +84,7 @@ urlpatterns = [
     ),
 
     url(
-        r'^gallery/create/$}',
+        r'^gallery/create/$',
         views_galleries.gallery_create,
         name='gallery_create'
     ),
