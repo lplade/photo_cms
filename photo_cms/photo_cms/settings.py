@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',  # Need this for hstore support
     'storages',  # S3 storage
+    'crispy_forms',  # more control over form rendering
     'dam',  # main digital asset manager app
 ]
 
@@ -72,6 +73,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 WSGI_APPLICATION = 'photo_cms.wsgi.application'
 

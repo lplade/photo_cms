@@ -1,4 +1,5 @@
 {% extends 'dam/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
@@ -9,8 +10,8 @@
         <div class="col-md-12">
             <form method="post" action="{% url 'dam:gallery_create' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Create">
+                {{ form|crispy }}
+                <input type="submit" class="btn btn-default" value="Create">
             </form>
         </div>
     </div>

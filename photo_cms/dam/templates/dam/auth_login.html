@@ -1,11 +1,12 @@
 {% extends 'dam/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
     <h1>Log in</h1>
     <form method="POST" action="">
         <!-- TODO bootstrap-ify this -->
         {% csrf_token %}
         <table id="login_form" class="table">
-               {{ form.as_table }}
+               {{ form.as_table|crispy }}
         </table>
         <button type="submit" class="btn btn-default">Login</button>
     </form>
