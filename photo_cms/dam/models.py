@@ -157,7 +157,7 @@ class Gallery(models.Model):
     """
     owner = models.ForeignKey('auth.User', blank=False)
     name = models.CharField(max_length=255, blank=False)
-    description = models.TextField
+    description = models.TextField(blank=True)
     # ManyToManyField set in Photo
     created_datetime = models.DateTimeField(default=timezone.now)
     modified_datetime = models.DateTimeField(default=timezone.now)
