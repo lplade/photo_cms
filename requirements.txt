@@ -7,6 +7,7 @@ botocore==1.5.47
 cement==2.8.2
 colorama==0.3.7
 Django==1.11
+django-crispy-forms==1.6.1
 django-storages==1.5.2
 docker-py==1.7.2
 dockerpty==0.4.1
