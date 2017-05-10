@@ -20,10 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=an*a9kv9l3x%ucc!&9hj^7a+f1v=)^y6^h@fo%$ttvu6pr)0j'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+if os.getenv('DJANGO_DEBUG'):
+    DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',  # Need this for hstore support
-    'dam',
-    'storages',
+    'dam',  # main digital asset manager app
+    'storages',  # S3 storage
 ]
 
 MIDDLEWARE = [
@@ -124,6 +126,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# authentication backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # default password based
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -146,14 +152,34 @@ LOGOUT_REDIRECT_URL = 'dam:homepage'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-# TODO set up AWS S3
+if ('AWS_ACCESS_KEY ID' in os.environ) and ('AWS_SECRET_KEY' in os.environ):
+    AWS_STORAGE_BUCKET_NAME = 'photo-cms-files'
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_KEY']
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_USE_SSL = True
+    AWS_S3_SECURE_URLS = True
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'www', 'static')
-STATIC_URL = '/static/'
+    # Serve 'static' files in templates from S3
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'www', 'media')
-MEDIA_URL = '/media/'
+    MEDIAFILES_LOCATION = 'media/'
+    MEDIA_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
-STATICFILES_LOCATION = 'static'
-MEDIAFILES_LOCATON = 'media'
+    STATICFILES_LOCATION = 'static/'
+    STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    DEFAULT_FILE_STORAGE = 'photo_cms.custom_storages.MediaStorage'
+    STATICFILES_STORAGE = 'photo_cms.custom_storages.StaticStorage'
+
+else:
+
+    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'www', 'static')
+    STATIC_URL = '/static/'
+
+    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'www', 'media')
+    MEDIA_URL = '/media/'
+
+    STATICFILES_LOCATION = 'static'
+    MEDIAFILES_LOCATON = 'media'
 
