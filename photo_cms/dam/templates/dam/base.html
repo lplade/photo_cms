@@ -47,8 +47,11 @@
         {# Page content goes here #}
     {% endblock %}
 </div>
-{% include 'dam/includes/legal.html' %}
-
+<footer class="footer">
+    <div class="container">
+        {% include 'dam/includes/legal.html' %}
+    </div>
+</footer>
 {% block scripts %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> #}
@@ -61,4 +64,5 @@
     {% endblock %}
 {% endblock %}
 </body>
+
 </html>
