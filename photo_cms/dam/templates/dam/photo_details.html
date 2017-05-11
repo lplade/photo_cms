@@ -3,24 +3,31 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
-            <h1>Photo details</h1>
+            <ol class="breadcrumb">
+                <li><a href="{% url 'dam:my_photoroll' %}">Photos</a></li>
+                <li class="active">{{ photo.original_filename }}</li>
+            </ol>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-8 col-md-12">
             <img class="img-responsive"
-                 src="{{ photo.image_data.url }}" alt="{{ photo.original_filename }}">
+                 src="{{ photo.image_data.url }}"
+                 alt="{{ photo.original_filename }}">
             <form method="post" action="">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
 
-            <p><a class="btn btn-danger" href="{% url 'dam:photo_delete' photo_pk=photo.pk %}">Delete</a></p>
+            <p><a class="btn btn-danger"
+                  href="{% url 'dam:photo_delete' photo_pk=photo.pk %}">Delete</a>
+            </p>
         </div>
         <div class="col-lg-4 col-md-12">
             <div class="table-responsive">
-            <h2>Details</h2>
+                <!-- Some details about the file -->
+                <h2>Details</h2>
                 <table class="table table-striped">
                     <tr>
                         <td>Filename</td>
@@ -35,23 +42,27 @@
                         <td>{{ photo.modified_datetime }}</td>
                     </tr>
                 </table>
-                <h2>Exif</h2>
-                <table class="table table-condensed table-striped">
-                    <tr>
-                        <th>Tag</th>
-                        <th>Value</th>
-                    </tr>
-                    {% for tag, value in photo.exif_tags.items %}
+                <!-- Extracted metadata -->
+                <h3 data-toggle="collapse" data-target="#exiftable">Exif tags
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i></h3>
+                <div id="exiftable" class="collapse">
+                    <table class="table table-condensed table-striped">
                         <tr>
-                            <td>{{ tag }}</td>
-                            <td>{{ value }}</td>
+                            <th>Tag</th>
+                            <th>Value</th>
                         </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="2">No tags!</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+                        {% for tag, value in photo.exif_tags.items|dictsort:0 %}
+                            <tr>
+                                <td>{{ tag }}</td>
+                                <td>{{ value }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="2">No tags!</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
