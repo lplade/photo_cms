@@ -98,6 +98,7 @@ class UserModificationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
+        # TODO this does not seem to pass display_name
         fields = ('display_name', 'about', 'city', 'state', 'country')
         # TODO validate display_name to not blank
 

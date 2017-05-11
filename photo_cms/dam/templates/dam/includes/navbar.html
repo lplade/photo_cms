@@ -28,21 +28,37 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li>
                     {% if user.is_authenticated %}
-                        <p class="navbar-text">Logged in as
-                            {# TODO link to something #}
-                            {{ user.username }}.
-                            <a href="{% url 'logout' %}?next={% url 'dam:logout_message' %}">Log out</a>
-                        </p>
-                    {% else %}
+                        <li>
                         <p class="navbar-text">
-                            <a href="{% url 'login' %}?next={{ request.path }}" class="navbar-link">
-                                Log in or sign up
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <a class="navbar-link" href="{% url 'dam:my_user_profile' %}">
+                                {{ user.username }}
                             </a>
                         </p>
+                        </li>
+                        <li>
+                        <p class="navbar-text">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            <a class="navbar-link" href="{% url 'logout' %}?next={% url 'dam:logout_message' %}">Log out</a>
+                        </p>
+                    {% else %}
+                        <li>
+                        <p class="navbar-text">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="navbar-link">
+                                Sign in
+                            </a>
+                        </p>
+                        </li>
+                        <li>
+                        <p class="navbar-text">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            <a href="{% url 'register' %}" class="navbar-link">
+                                Register</a>
+                        </p>
+                    </li>
                     {% endif %}
-                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>

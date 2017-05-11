@@ -7,18 +7,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
             <p>info about user shows up here</p>
         </div>
-        <div class="col-sm-4">
-
+        <div class="col-sm-12">
             {% if profile %}
                 <form method="post" action="">
-                    <!-- TODO bootstrapify this -->
                     {% csrf_token %}
-                    <table id="modification_form">
-                        {{ form|cripsy }}
-                    </table>
+                    {{ form|crispy }}
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
             {% endif %}

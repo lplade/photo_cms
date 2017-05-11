@@ -46,7 +46,7 @@ def my_user_profile(request):
     try:
         profile = request.user.profile
     except ObjectDoesNotExist:
-        profile = Profile(user=request.user)
+        profile = Profile(user=request.user, display_name=request.user.username)
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST)
@@ -61,6 +61,7 @@ def my_user_profile(request):
             profile.save()
 
         return render(request, 'dam/user_modify.html',
+                      # TODO message about updated
                       {'form': form,
                        'profile': profile,
                        'title': SITE_TITLE, })
@@ -75,7 +76,7 @@ def my_user_profile(request):
     return render(request, 'dam/user_modify.html',
                   {'form': form,
                    'profile': profile,
-                   'title': SITE_TITLE})
+                   'title': SITE_TITLE, })
 
 
 @login_required
