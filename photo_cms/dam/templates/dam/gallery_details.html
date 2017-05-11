@@ -6,22 +6,28 @@
                 <li>Galleries</li>
                 <li class="active">{{ gallery.name }}</li>
             </ol>
-            <p><small>{{ gallery.description }}</small></p>
+            <p>
+                <small>{{ gallery.description }}</small>
+            </p>
             {# TODO form to edit name/description (js?) #}
         </div>
         <div class="row">
+            <!--
             <div class="col-md-6">
                 Button to add photos goes here
-            </div>
-            <div class="col-md-6">
-                Button to delete gallery goes here
+            </div> -->
+            <div class="col-md-6 pull-right">
+                <a class="btn btn-danger"
+                   href="{% url 'dam:gallery_delete' gallery_pk=gallery.pk %}">
+                    Delete gallery
+                </a>
             </div>
         </div>
         <div class="row match-my-cols">
             {% for photo in photos %}
                 <div class="col-xs-6 col-sm-4 col-md-2">
-                {# link to the photo #}
-                {# TODO use lightbox here? #}
+                    {# link to the photo #}
+                    {# TODO use lightbox here? #}
                     <a href="{% url 'dam:photo_details' photo_pk=photo.pk %}">
                         {# render a thumbnail #}
                         <img class="img-responsive img-thumbnail"
@@ -36,9 +42,9 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="row facebook"> <!-- Facebook sharing button -->
-            <div class="col-md-6">
-                {% url 'dam:gallery_details' gallery_pk=gallery.pk as this_url  %}
+        <div class="row facebook"> <!-- social sharing buttons -->
+            {% url 'dam:gallery_details' gallery_pk=gallery.pk as this_url %}
+            <div class="col-sm-1">
                 <div class="fb-share-button"
                      data-href="{{ this_url }}"
                      data-layout="button_count" data-size="small"
@@ -50,9 +56,29 @@
                     </a>
                 </div>
             </div>
+            <div class="col-sm-1">
+                <a href="https://twitter.com/share" class="twitter-share-button"
+                   data-text="{{ gallery.name }}"
+                   data-url="{{ this_url }}"
+                   data-related="lplade" data-show-count="false">
+                    Tweet
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <div class="g-plus"
+                     data-action="share"
+                     data-annotation="none"
+                     data-href="{{ this_url }}">
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 {% block jsincludes %}
+    <!-- Facebook -->
     {% include 'dam/includes/facebook_sdk.html' %}
+    <!-- Twitter -->
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <!-- Google+ -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 {% endblock %}
