@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import Photo, Gallery, Profile
+from .models import Photo, Gallery, Profile, ExifTag
 
 # Register your models here.
 admin.site.register(Photo)
 admin.site.register(Gallery)
+admin.site.register(ExifTag)
 
 
 # Put Profile details in User details

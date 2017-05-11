@@ -335,6 +335,7 @@ class Photo(models.Model):
         return True
 
 
+# TODO finish implementing this
 class ExifTag(models.Model):
     photo = models.OneToOneField(
         Photo,

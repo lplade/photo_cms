@@ -1,0 +1,98 @@
+ExifTool Version Number         : 9.74
+File Name                       : test.jpg
+Directory                       : .
+File Size                       : 10 MB
+File Modification Date/Time     : 2017:05:10 22:53:57-05:00
+File Access Date/Time           : 2017:05:10 22:57:52-05:00
+File Inode Change Date/Time     : 2017:05:10 22:57:52-05:00
+File Permissions                : rw-r--r--
+File Type                       : JPEG
+MIME Type                       : image/jpeg
+Exif Byte Order                 : Big-endian (Motorola, MM)
+Compression                     : Uncompressed
+Photometric Interpretation      : RGB
+Make                            : PENTAX
+Camera Model Name               : PENTAX K-50
+Orientation                     : Horizontal (normal)
+Samples Per Pixel               : 3
+X Resolution                    : 300
+Y Resolution                    : 300
+Planar Configuration            : Chunky
+Resolution Unit                 : inches
+Software                        : RawTherapee
+Modify Date                     : 2017:05:10 22:34:43
+Artist                          : Larry Lade
+CFA Repeat Pattern Dim          : 2 2
+CFA Pattern 2                   : 0 1 1 2
+Copyright                       : Larry Lade
+Exposure Time                   : 1/60
+F Number                        : 2.4
+Exposure Program                : Program AE
+ISO                             : 400
+Date/Time Original              : 2017:05:10 22:34:43
+Create Date                     : 2017:05:10 22:34:43
+Exposure Compensation           : 0
+Metering Mode                   : Center-weighted average
+Flash                           : Off, Did not fire
+Focal Length                    : 35.0 mm
+Sensing Method                  : One-chip color area
+Custom Rendered                 : Normal
+Exposure Mode                   : Auto
+White Balance                   : Auto
+Focal Length In 35mm Format     : 52 mm
+Scene Capture Type              : Standard
+Contrast                        : Normal
+Saturation                      : Normal
+Sharpness                       : Normal
+Subject Distance Range          : Macro
+GPS Version ID                  : 2.3.0.0
+Unique Camera Model             : PENTAX K-50
+Profile CMM Type                : lcms
+Profile Version                 : 2.3.0
+Profile Class                   : Display Device Profile
+Color Space Data                : RGB
+Profile Connection Space        : XYZ
+Profile Date Time               : 2012:01:15 17:28:16
+Profile File Signature          : acsp
+Primary Platform                : Microsoft Corporation
+CMM Flags                       : Not Embedded, Independent
+Device Manufacturer             : LCMS
+Device Model                    : 
+Device Attributes               : Reflective, Glossy, Positive, Color
+Rendering Intent                : Perceptual
+Connection Space Illuminant     : 0.9642 1 0.82491
+Profile Creator                 : lcms
+Profile ID                      : 0
+Device Mfg Desc                 : Rawtherapee
+Profile Description             : RT_sRGB gamma sRGB(IEC61966 equivalent)
+Device Model Desc               : RTsRGB
+Media White Point               : 0.95016 1 1.08842
+Red Matrix Column               : 0.43585 0.22238 0.01392
+Blue Matrix Column              : 0.14302 0.06059 0.71385
+Green Matrix Column             : 0.38533 0.71704 0.09712
+Red Tone Reproduction Curve     : (Binary data 8204 bytes, use -b option to extract)
+Green Tone Reproduction Curve   : (Binary data 8204 bytes, use -b option to extract)
+Blue Tone Reproduction Curve    : (Binary data 8204 bytes, use -b option to extract)
+Chromaticity Channels           : 3
+Chromaticity Colorant           : Unknown (0)
+Chromaticity Channel 1          : 0.64 0.33
+Chromaticity Channel 2          : 0.3 0.60001
+Chromaticity Channel 3          : 0.14999 0.06
+Profile Copyright               : No copyright Rawtherapee -IEC61966 equivalent
+Media Black Point               : 0 0 0
+Image Width                     : 3278
+Image Height                    : 2886
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:4:4 (1 1)
+Aperture                        : 2.4
+CFA Pattern                     : [Red,Green][Green,Blue]
+Image Size                      : 3278x2886
+Scale Factor To 35 mm Equivalent: 1.5
+Shutter Speed                   : 1/60
+Circle Of Confusion             : 0.020 mm
+Field Of View                   : 38.2 deg
+Focal Length                    : 35.0 mm (35 mm equivalent: 52.0 mm)
+Hyperfocal Distance             : 25.24 m
+Light Value                     : 6.4
