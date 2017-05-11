@@ -1,3 +1,9 @@
+## Description ##
+
+[Live demo](http://photo-cms-dev.us-west-2.elasticbeanstalk.com/)
+
+screenshots
+
 ## Requirements ##
 * [Python 3.4](https://www.python.org/downloads/release/python-346/)
 * [PostgreSQL 9.4+](https://www.postgresql.org/download/) In Debian and 
