@@ -18,10 +18,13 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 from os.path import join, dirname, abspath
+import os
 import sys
-basepath = abspath(join(dirname(dirname(__file__))))
-sys.path.insert(0, abspath(join(basepath, 'photo_cms')))
-
+import django
+basepath = abspath(__file__ + '/../../../')
+sys.path.insert(0, join(basepath, 'photo_cms'))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'photo_cms.settings'
+django.setup()
 
 
 # -- General configuration ------------------------------------------------

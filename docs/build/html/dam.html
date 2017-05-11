@@ -51,26 +51,692 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="dam-admin-module">
-<h2>dam.admin module<a class="headerlink" href="#dam-admin-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dam.admin">
+<span id="dam-admin-module"></span><h2>dam.admin module<a class="headerlink" href="#module-dam.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dam.admin.ProfileInLine">
+<em class="property">class </em><code class="descclassname">dam.admin.</code><code class="descname">ProfileInLine</code><span class="sig-paren">(</span><em>parent_model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.admin.ProfileInLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.StackedInline</span></code></p>
+<dl class="attribute">
+<dt id="dam.admin.ProfileInLine.can_delete">
+<code class="descname">can_delete</code><em class="property"> = False</em><a class="headerlink" href="#dam.admin.ProfileInLine.can_delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.admin.ProfileInLine.media">
+<code class="descname">media</code><a class="headerlink" href="#dam.admin.ProfileInLine.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.admin.ProfileInLine.model">
+<code class="descname">model</code><a class="headerlink" href="#dam.admin.ProfileInLine.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Profile</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.admin.ProfileInLine.verbose_name_plural">
+<code class="descname">verbose_name_plural</code><em class="property"> = 'profiles'</em><a class="headerlink" href="#dam.admin.ProfileInLine.verbose_name_plural" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dam.admin.UserAdmin">
+<em class="property">class </em><code class="descclassname">dam.admin.</code><code class="descname">UserAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.admin.UserAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.admin.UserAdmin</span></code></p>
+<dl class="attribute">
+<dt id="dam.admin.UserAdmin.inlines">
+<code class="descname">inlines</code><em class="property"> = (&lt;class 'dam.admin.ProfileInLine'&gt;,)</em><a class="headerlink" href="#dam.admin.UserAdmin.inlines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.admin.UserAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#dam.admin.UserAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="dam-apps-module">
-<h2>dam.apps module<a class="headerlink" href="#dam-apps-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dam.apps">
+<span id="dam-apps-module"></span><h2>dam.apps module<a class="headerlink" href="#module-dam.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dam.apps.DamConfig">
+<em class="property">class </em><code class="descclassname">dam.apps.</code><code class="descname">DamConfig</code><span class="sig-paren">(</span><em>app_name</em>, <em>app_module</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.apps.DamConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="attribute">
+<dt id="dam.apps.DamConfig.name">
+<code class="descname">name</code><em class="property"> = 'dam'</em><a class="headerlink" href="#dam.apps.DamConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.apps.DamConfig.ready">
+<code class="descname">ready</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.apps.DamConfig.ready" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="dam-models-module">
-<h2>dam.models module<a class="headerlink" href="#dam-models-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dam.models">
+<span id="dam-models-module"></span><h2>dam.models module<a class="headerlink" href="#module-dam.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dam.models.ExifTag">
+<em class="property">class </em><code class="descclassname">dam.models.</code><code class="descname">ExifTag</code><span class="sig-paren">(</span><em>id</em>, <em>photo</em>, <em>make</em>, <em>model</em>, <em>_f_number</em>, <em>_focal_length</em>, <em>_exposure_time</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.ExifTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="dam.models.ExifTag.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#dam.models.ExifTag.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="dam.models.ExifTag.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#dam.models.ExifTag.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.ExifTag.exposure_time">
+<code class="descname">exposure_time</code><span class="sig-paren">(</span><em>numerator=None</em>, <em>denominator=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.ExifTag.exposure_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.ExifTag.f_number">
+<code class="descname">f_number</code><span class="sig-paren">(</span><em>numerator=None</em>, <em>denominator=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.ExifTag.f_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.ExifTag.focal_length">
+<code class="descname">focal_length</code><span class="sig-paren">(</span><em>numerator=None</em>, <em>denominator=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.ExifTag.focal_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.ExifTag.id">
+<code class="descname">id</code><a class="headerlink" href="#dam.models.ExifTag.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.ExifTag.iso_speed_ratings">
+<code class="descname">iso_speed_ratings</code><a class="headerlink" href="#dam.models.ExifTag.iso_speed_ratings" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">IntegerField</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.ExifTag.make">
+<code class="descname">make</code><a class="headerlink" href="#dam.models.ExifTag.make" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.ExifTag.model">
+<code class="descname">model</code><a class="headerlink" href="#dam.models.ExifTag.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.ExifTag.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#dam.models.ExifTag.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.ExifTag.photo">
+<code class="descname">photo</code><a class="headerlink" href="#dam.models.ExifTag.photo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="dam-tests-module">
-<h2>dam.tests module<a class="headerlink" href="#dam-tests-module" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.ExifTag.photo_id">
+<code class="descname">photo_id</code><a class="headerlink" href="#dam.models.ExifTag.photo_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dam.models.FractionDict">
+<em class="property">class </em><code class="descclassname">dam.models.</code><code class="descname">FractionDict</code><span class="sig-paren">(</span><em>numerator</em>, <em>denominator</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.FractionDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Simple class to store a fraction of integers</p>
+<dl class="method">
+<dt id="dam.models.FractionDict.get_as_dict">
+<code class="descname">get_as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.FractionDict.get_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fraction as a dictionary {&#8216;numerator&#8217;, &#8216;denominator&#8217;}
+:return: Dictionary with keys &#8216;numerator&#8217; and &#8216;denominator&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.FractionDict.get_as_float">
+<code class="descname">get_as_float</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.FractionDict.get_as_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the mathematical value of the fraction
+:return: Float of numerator / denominator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.FractionDict.set_by_dict">
+<code class="descname">set_by_dict</code><span class="sig-paren">(</span><em>dictionary</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.FractionDict.set_by_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores numerator and denominator by dict with keys &#8216;numerator&#8217; and 
+&#8216;denominator&#8217;
+:param dictionary: dict with keys &#8216;numerator&#8217; and &#8216;denominator&#8217;
+:return: True if no error</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.FractionDict.set_by_list">
+<code class="descname">set_by_list</code><span class="sig-paren">(</span><em>_list</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.FractionDict.set_by_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store numerator and denominator by list [numerator, denominator]
+:param _list: list of [numerator, denominator]
+:return: True if no error</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dam.models.Gallery">
+<em class="property">class </em><code class="descclassname">dam.models.</code><code class="descname">Gallery</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Gallery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>This represents a collection of photos</p>
+<dl class="exception">
+<dt id="dam.models.Gallery.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#dam.models.Gallery.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="dam.models.Gallery.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#dam.models.Gallery.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.created_datetime">
+<code class="descname">created_datetime</code><a class="headerlink" href="#dam.models.Gallery.created_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.description">
+<code class="descname">description</code><a class="headerlink" href="#dam.models.Gallery.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Gallery.get_next_by_created_datetime">
+<code class="descname">get_next_by_created_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Gallery.get_next_by_created_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Gallery.get_next_by_modified_datetime">
+<code class="descname">get_next_by_modified_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Gallery.get_next_by_modified_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Gallery.get_previous_by_created_datetime">
+<code class="descname">get_previous_by_created_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Gallery.get_previous_by_created_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Gallery.get_previous_by_modified_datetime">
+<code class="descname">get_previous_by_modified_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Gallery.get_previous_by_modified_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.id">
+<code class="descname">id</code><a class="headerlink" href="#dam.models.Gallery.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.modified_datetime">
+<code class="descname">modified_datetime</code><a class="headerlink" href="#dam.models.Gallery.modified_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.name">
+<code class="descname">name</code><a class="headerlink" href="#dam.models.Gallery.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#dam.models.Gallery.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.owner">
+<code class="descname">owner</code><a class="headerlink" href="#dam.models.Gallery.owner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="dam-urls-module">
-<h2>dam.urls module<a class="headerlink" href="#dam-urls-module" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.owner_id">
+<code class="descname">owner_id</code><a class="headerlink" href="#dam.models.Gallery.owner_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Gallery.photos">
+<code class="descname">photos</code><a class="headerlink" href="#dam.models.Gallery.photos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="dam-views-module">
-<h2>dam.views module<a class="headerlink" href="#dam-views-module" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Gallery.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Gallery.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dam.models.Photo">
+<em class="property">class </em><code class="descclassname">dam.models.</code><code class="descname">Photo</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Represents a single image including metadata</p>
+<dl class="exception">
+<dt id="dam.models.Photo.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#dam.models.Photo.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="dam.models.Photo.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#dam.models.Photo.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.caption">
+<code class="descname">caption</code><a class="headerlink" href="#dam.models.Photo.caption" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.created_datetime">
+<code class="descname">created_datetime</code><a class="headerlink" href="#dam.models.Photo.created_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.exif">
+<code class="descname">exif</code><a class="headerlink" href="#dam.models.Photo.exif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the reverse side of a one-to-one
+relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">place.restaurant</span></code> is a <code class="docutils literal"><span class="pre">ReverseOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.exif_tags">
+<code class="descname">exif_tags</code><a class="headerlink" href="#dam.models.Photo.exif_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.format">
+<code class="descname">format</code><a class="headerlink" href="#dam.models.Photo.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.galleries">
+<code class="descname">galleries</code><a class="headerlink" href="#dam.models.Photo.galleries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.get_exif">
+<code class="descname">get_exif</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.get_exif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses exifread to get Exif tags
+:return: dict of tags</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.get_format">
+<code class="descname">get_format</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.get_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses Pillow to determine image format
+:return: Pillow image format</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.get_next_by_created_datetime">
+<code class="descname">get_next_by_created_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.get_next_by_created_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.get_next_by_modified_datetime">
+<code class="descname">get_next_by_modified_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.get_next_by_modified_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.get_previous_by_created_datetime">
+<code class="descname">get_previous_by_created_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.get_previous_by_created_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.get_previous_by_modified_datetime">
+<code class="descname">get_previous_by_modified_datetime</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.get_previous_by_modified_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.id">
+<code class="descname">id</code><a class="headerlink" href="#dam.models.Photo.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.image_data">
+<code class="descname">image_data</code><a class="headerlink" href="#dam.models.Photo.image_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just like the FileDescriptor, but for ImageFields. The only difference is
+assigning the width/height to the width_field/height_field, if appropriate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.image_height">
+<code class="descname">image_height</code><a class="headerlink" href="#dam.models.Photo.image_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.image_width">
+<code class="descname">image_width</code><a class="headerlink" href="#dam.models.Photo.image_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.make_thumbnail">
+<code class="descname">make_thumbnail</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.make_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a thumbnail image with Pillow, and saves it as a proxy
+image in the model.
+:return: True if successful, False if no original image</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.modified_datetime">
+<code class="descname">modified_datetime</code><a class="headerlink" href="#dam.models.Photo.modified_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#dam.models.Photo.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.original_filename">
+<code class="descname">original_filename</code><a class="headerlink" href="#dam.models.Photo.original_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.owner">
+<code class="descname">owner</code><a class="headerlink" href="#dam.models.Photo.owner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.owner_id">
+<code class="descname">owner_id</code><a class="headerlink" href="#dam.models.Photo.owner_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.proxy_data">
+<code class="descname">proxy_data</code><a class="headerlink" href="#dam.models.Photo.proxy_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just like the FileDescriptor, but for ImageFields. The only difference is
+assigning the width/height to the width_field/height_field, if appropriate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.proxy_height">
+<code class="descname">proxy_height</code><a class="headerlink" href="#dam.models.Photo.proxy_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Photo.proxy_width">
+<code class="descname">proxy_width</code><a class="headerlink" href="#dam.models.Photo.proxy_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Photo.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Photo.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dam.models.Profile">
+<em class="property">class </em><code class="descclassname">dam.models.</code><code class="descname">Profile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>User profile</p>
+<dl class="exception">
+<dt id="dam.models.Profile.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#dam.models.Profile.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="dam.models.Profile.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#dam.models.Profile.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.about">
+<code class="descname">about</code><a class="headerlink" href="#dam.models.Profile.about" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.city">
+<code class="descname">city</code><a class="headerlink" href="#dam.models.Profile.city" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.country">
+<code class="descname">country</code><a class="headerlink" href="#dam.models.Profile.country" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.display_name">
+<code class="descname">display_name</code><a class="headerlink" href="#dam.models.Profile.display_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Profile.get_username">
+<code class="descname">get_username</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Profile.get_username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.id">
+<code class="descname">id</code><a class="headerlink" href="#dam.models.Profile.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#dam.models.Profile.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.models.Profile.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.models.Profile.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.state">
+<code class="descname">state</code><a class="headerlink" href="#dam.models.Profile.state" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.user">
+<code class="descname">user</code><a class="headerlink" href="#dam.models.Profile.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dam.models.Profile.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#dam.models.Profile.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dam.tests">
+<span id="dam-tests-module"></span><h2>dam.tests module<a class="headerlink" href="#module-dam.tests" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dam.tests.PhotoModelTest">
+<em class="property">class </em><code class="descclassname">dam.tests.</code><code class="descname">PhotoModelTest</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.PhotoModelTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<dl class="method">
+<dt id="dam.tests.PhotoModelTest.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.PhotoModelTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.tests.PhotoModelTest.test_exif_tags">
+<code class="descname">test_exif_tags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.PhotoModelTest.test_exif_tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.tests.PhotoModelTest.test_format">
+<code class="descname">test_format</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.PhotoModelTest.test_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.tests.PhotoModelTest.test_image_size">
+<code class="descname">test_image_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.PhotoModelTest.test_image_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.tests.PhotoModelTest.test_owner_id">
+<code class="descname">test_owner_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.PhotoModelTest.test_owner_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dam.tests.PhotoModelTest.test_string_representation">
+<code class="descname">test_string_representation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.PhotoModelTest.test_string_representation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dam.tests.UserModelTest">
+<em class="property">class </em><code class="descclassname">dam.tests.</code><code class="descname">UserModelTest</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.UserModelTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<dl class="method">
+<dt id="dam.tests.UserModelTest.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.UserModelTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="dam.tests.gen_dummy_user">
+<code class="descclassname">dam.tests.</code><code class="descname">gen_dummy_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dam.tests.gen_dummy_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>All models depend on logged in user, so generate a standard user for tests
+:return: A User instance</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dam.urls">
+<span id="dam-urls-module"></span><h2>dam.urls module<a class="headerlink" href="#module-dam.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dam.views">
+<span id="dam-views-module"></span><h2>dam.views module<a class="headerlink" href="#module-dam.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="dam.views.home">
+<code class="descclassname">dam.views.</code><code class="descname">home</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#dam.views.home" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-dam">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dam" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -85,13 +751,13 @@
 <li><a class="reference internal" href="#">dam package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#dam-admin-module">dam.admin module</a></li>
-<li><a class="reference internal" href="#dam-apps-module">dam.apps module</a></li>
-<li><a class="reference internal" href="#dam-models-module">dam.models module</a></li>
-<li><a class="reference internal" href="#dam-tests-module">dam.tests module</a></li>
-<li><a class="reference internal" href="#dam-urls-module">dam.urls module</a></li>
-<li><a class="reference internal" href="#dam-views-module">dam.views module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-dam.admin">dam.admin module</a></li>
+<li><a class="reference internal" href="#module-dam.apps">dam.apps module</a></li>
+<li><a class="reference internal" href="#module-dam.models">dam.models module</a></li>
+<li><a class="reference internal" href="#module-dam.tests">dam.tests module</a></li>
+<li><a class="reference internal" href="#module-dam.urls">dam.urls module</a></li>
+<li><a class="reference internal" href="#module-dam.views">dam.views module</a></li>
+<li><a class="reference internal" href="#module-dam">Module contents</a></li>
 </ul>
 </li>
 </ul>
