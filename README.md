@@ -1,8 +1,29 @@
+# Photo CMS #
+
+(needs a catchier name)
+
 ## Description ##
 
-[Live demo](http://photo-cms-dev.us-west-2.elasticbeanstalk.com/)
+Web-based photo content management system
 
-screenshots
+[Live demo at AWS](http://photo-cms-dev.us-west-2.elasticbeanstalk.com/)
+
+## Screenshots ##
+
+### Home page ###
+![home page](screenshots/home.jpeg)
+
+### Photoroll ###
+![photo roll](screenshots/photoroll.jpeg)
+
+### Photo details ###
+![photo details](screenshots/photo.jpeg)
+
+### List of galleries ###
+![gallery list](screenshots/gallery_list.jpeg)
+
+### Gallery ###
+![gallery](screenshots/gallery.jpeg)
 
 ## Requirements ##
 * [Python 3.4](https://www.python.org/downloads/release/python-346/)
@@ -31,6 +52,12 @@ TODO just run setup script
         * `create extension if not exists hstore;`
 * Store password in POSTGRES_PHOTO_PASSWORD environmental variable
     * bash$ `export POSTGRES_PHOTO_PASSWORD='xxxx'`
+* Set DJANGO_SECRET_KEY before running. Can generate from Python console with
+```
+import random
+print(''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)]))
+```
+* Set DJANGO_DEBUG=1 for debug mode
 * `python manage.py migrate`
 * `python manage.py collectstatic`
 * `python manage.py createsuperuser`
