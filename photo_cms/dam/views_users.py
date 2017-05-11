@@ -19,6 +19,12 @@ SITE_TITLE = 'Photos'
 
 
 def user_profile(request, user_pk):
+    """
+    User profile page
+    :param request: http request object
+    :param user_pk: primary key of requested user
+    :return: render profile page to any user
+    """
     user = User.objects.get(pk=user_pk)
     user_galleries = Gallery.objects.filter(owner=user.pk)
 
@@ -31,6 +37,11 @@ def user_profile(request, user_pk):
 @login_required
 @transaction.atomic
 def my_user_profile(request):
+    """
+    Shows profile details for currently logged in user
+    :param request: http request object
+    :return: render profile form or update details
+    """
     # If no Profile is associated with User, create a Profile for that User
     try:
         profile = request.user.profile
@@ -69,6 +80,11 @@ def my_user_profile(request):
 
 @login_required
 def modify_user(request):
+    """
+    Edits core User data
+    :param request: http request object
+    :return: renders User detail form or updates
+    """
     if request.method == 'POST':
         form = UserModificationForm(request.POST)
 
@@ -96,6 +112,11 @@ def modify_user(request):
 
 @login_required
 def my_photoroll(request):
+    """
+    Shows all photos for current user
+    :param request: http request object
+    :return: render photoroll
+    """
     user = request.user
 
     # Catch if Profile is not set up and prompt user to enter details
@@ -118,6 +139,11 @@ def my_photoroll(request):
 
 @login_required
 def my_galleries(request):
+    """
+    Shows all galleries for current user
+    :param request: http request object
+    :return: render gallery list
+    """
     user = request.user
     profile = request.user.profile
     galleries = Gallery.objects.filter(owner=request.user)\
@@ -133,8 +159,8 @@ def my_galleries(request):
 def register(request):
     """
     Allow users to register profiles using built-in Django model auth.user
-    :param request: 
-    :return: 
+    :param request: http request object
+    :return: render new user signup form or creates user
     """
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -160,9 +186,9 @@ def register(request):
 
 def logout_message(request):
     """
-    logout redirect
-    :param request: 
-    :return: 
+    Shows confirmation of user logout
+    :param request: http request object
+    :return: render logout confirmation
     """
     return render(request, 'dam/auth_logout.html', {'title': SITE_TITLE})
 

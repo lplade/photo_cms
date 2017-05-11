@@ -22,6 +22,12 @@ SITE_TITLE = 'Photos'
 
 @login_required
 def photo_details(request, photo_pk):
+    """
+    Details for a given photo
+    :param request: http request object
+    :param photo_pk: primary key of photo in question
+    :return: render photo details page
+    """
     photo = Photo.objects.get(pk=photo_pk)
 
     if request.method == 'POST':
@@ -44,6 +50,11 @@ def photo_details(request, photo_pk):
 # https://coderwall.com/p/bz0sng/simple-django-image-upload-to-model-imagefield
 @login_required
 def photo_upload(request):
+    """
+    Lets us upload an image file into the app
+    :param request: http request object, including file data
+    :return: render upload form, or redirect to photoroll
+    """
     if request.method == 'POST':
         form = PhotoUploadForm(request.POST, request.FILES)
         if form.is_valid() and request.FILES:
@@ -63,6 +74,12 @@ def photo_upload(request):
 # http://stackoverflow.com/a/13644671/7087237
 @login_required
 def photo_delete(request, photo_pk):
+    """
+    Confirms deletion of a Photo
+    :param request: http request object
+    :param photo_pk: primary key of Photo we will delete
+    :return: render confirmation, or delete Photo and redirect to photoroll
+    """
     photo_to_delete = get_object_or_404(Photo, id=photo_pk)
     # If we don't own that photo, return HTTP 403 Unauthorized
     if photo_to_delete.owner != request.user:

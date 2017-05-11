@@ -8,5 +8,10 @@ SITE_TITLE = 'Photos'
 
 
 def home(request):
+    """
+    Shows landing page
+    :param request: http request object
+    :return: renders home page
+    """
     return render(request, 'dam/home.html',
                   {'title': SITE_TITLE, })

@@ -18,7 +18,13 @@ SITE_TITLE = 'Photos'
 
 @login_required
 def gallery_details(request, gallery_pk):
-    # This basically works like a photoroll, but we can add elements
+    """
+    Displays all elements of a given gallery.
+    Works like a photoroll, but we can add elements.
+    :param request: http request object
+    :param gallery_pk: primary key of gallery we want
+    :return: render details form
+    """
     gallery = Gallery.objects.get(pk=gallery_pk)
     photos = Photo.objects.filter(galleries=gallery)\
         .order_by('created_datetime')
@@ -42,6 +48,11 @@ def gallery_details(request, gallery_pk):
 
 @login_required
 def gallery_create(request):
+    """
+    View to let us create a new gallery
+    :param request: http request object
+    :return: render creation form
+    """
 
     if request.method == 'POST':
         form = GalleryCreateForm(request.POST)
@@ -60,6 +71,12 @@ def gallery_create(request):
 
 @login_required
 def gallery_delete(request, gallery_pk):
+    """
+    Confirm gallery deletion
+    :param request: http request object
+    :param gallery_pk: primary key of gallery we will delete
+    :return: renders delete form, or deletes gallery and redirects to gallery list
+    """
     gallery_to_delete = get_object_or_404(Gallery, id=gallery_pk)
     # If we don't own that gallery, return HTTP 403 Unauthorized
     if gallery_to_delete.owner != request.user:
