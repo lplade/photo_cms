@@ -1,15 +1,27 @@
 {% extends 'dam/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Log in</h1>
-    <form method="POST" action="">
-        <!-- TODO bootstrap-ify this -->
-        {% csrf_token %}
-        <table id="login_form" class="table">
-               {{ form.as_table|crispy }}
-        </table>
-        <button type="submit" class="btn btn-default">Login</button>
-    </form>
-    <p>Or <a href="{% url 'register' %}">create an account</a></p>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Log in</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <form method="POST" action="">
+                <!-- TODO bootstrap-ify this -->
+                {% csrf_token %}
+                <table id="login_form" class="table">
+                    {{ form|crispy }}
+                </table>
+                <button type="submit" class="btn btn-default">Login</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Or <a href="{% url 'register' %}">create an account</a></p>
+        </div>
+    </div>
 
 {% endblock %}
