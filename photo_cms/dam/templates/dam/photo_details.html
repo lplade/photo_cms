@@ -14,17 +14,18 @@
             <img class="img-responsive"
                  src="{{ photo.image_data.url }}"
                  alt="{{ photo.original_filename }}">
+        </div>
+        <div class="col-lg-4 col-md-12">
             <form method="post" action="">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
 
-            <p><a class="btn btn-danger"
-                  href="{% url 'dam:photo_delete' photo_pk=photo.pk %}">Delete</a>
+            <p>
+                <a class="btn btn-danger"
+                   href="{% url 'dam:photo_delete' photo_pk=photo.pk %}">Delete</a>
             </p>
-        </div>
-        <div class="col-lg-4 col-md-12">
             <div class="table-responsive">
                 <!-- Some details about the file -->
                 <h2>Details</h2>
@@ -44,7 +45,7 @@
                 </table>
                 <!-- Extracted metadata -->
                 <h3 data-toggle="collapse" data-target="#exiftable">Exif tags
-                    <span class="caret"></span>
+                    <span class="caret"></span> <small>Click to expand</small>
                 </h3>
                 <div id="exiftable" class="collapse well">
                     <table class="table table-condensed table-striped">

@@ -1,0 +1,1 @@
+[Exif standard v2.3](http://www.cipa.jp/std/documents/e/DC-008-2012_E.pdf)
