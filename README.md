@@ -6,7 +6,7 @@
 
 Web-based photo content management system
 
-[Live demo at AWS](http://photo-cms-dev.us-west-2.elasticbeanstalk.com/)
+~~[Live demo at AWS](http://photo-cms-dev.us-west-2.elasticbeanstalk.com/)~~ _Disabled due to billing_
 
 ## Screenshots ##
 
